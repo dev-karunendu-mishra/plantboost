@@ -4,7 +4,7 @@
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/"><img src="{{url('/assets/img/logo2.png')}}" height="150" /></a>
+    <a class="navbar-brand" href="/"><img src="{{url('/assets/img/logo2.png')}}" width="150" /></a>
 
     <svg class="icon icon-cart-empty" height="2.6em" width="2.6em" aria-hidden="true" focusable="false"
         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">

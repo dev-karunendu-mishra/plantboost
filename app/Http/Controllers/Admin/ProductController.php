@@ -48,6 +48,13 @@ class ProductController extends Controller
             "label"=>"Product's Old Price",
             "placeholder"=>"Product's Old Price"
         ],
+        "offer"=>[
+            "id"=>"offer",
+            "name"=>"offer",
+            "type"=>"text",
+            "label"=>"Product's offer",
+            "placeholder"=>"Product's offer"
+        ],
         "reviews"=>[
             "id"=>"reviews",
             "name"=>"reviews",
@@ -64,7 +71,7 @@ class ProductController extends Controller
         ],
         "image"=>[
             "id"=>"productImage",
-            "name"=>"image",
+            "name"=>"image[]",
             "type"=>"file",
             "label"=>"Product Image",
             "placeholder"=>"Product Image"
@@ -100,7 +107,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             // 'tags' => 'array|exists:tags,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $product = Product::create($request->all());
@@ -128,7 +135,7 @@ class ProductController extends Controller
                 $fileName = time() . '_' . $file->getClientOriginalName();
                 $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
                 // Save file path to the database
-                $product->files()->create([
+                $product->images()->create([
                     'path' => $filePath,
                 ]);
             }
@@ -170,14 +177,19 @@ class ProductController extends Controller
 
         $product->update($request->all());
 
-        $filePath=null;
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
-        }
-        if($filePath) {
-            $product->images()->create(['path'=>$filePath]);
+            // $file = $request->file('image');
+            // $fileName = time() . '_' . $file->getClientOriginalName();
+            // $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
+            // Handle file uploads
+            foreach ($request->file('image') as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
+                // Save file path to the database
+                $product->images()->create([
+                    'path' => $filePath,
+                ]);
+            }
         }
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }

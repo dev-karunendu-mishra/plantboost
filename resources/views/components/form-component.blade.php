@@ -37,10 +37,8 @@
 
 
             @case('file')
-            <!-- <input id="{{$field['id']}}" name="{{$field['name']}}"
-                class="form-control @error($field['name']) is-invalid @enderror" type="file" multiple/> -->
             <input id="{{$field['id']}}" name="{{$field['name']}}"
-                class="" type="file" multiple/>
+                class="form-control @error($field['name']) is-invalid @enderror" type="file" multiple/>
             @break
 
             @case('select')

@@ -1,10 +1,19 @@
 <x-default-app-layout>
     <div id="ticker" style="max-width: 500px;margin-inline: auto;padding-inline: 14px;">
-        this is a simple scrolling text!
+        {{!empty($siteData->notification) ? $siteData->notification : 'this is a simple scrolling text!'}}
+
     </div>
     <div class="container">
         @include('default.components.navbar')
 
+        @if($products && $products->images)
+
+        <div class="slider">
+            @foreach($products->images as $image)
+            <img src="{{asset('storage/'.$image->path)}}" alt="" />
+            @endforeach
+        </div>
+        @else
         <div class="slider">
             <img src="https://crazycrafti.shop/cdn/shop/files/You_also_have_back_pain_due_to_weight_gain._600x.jpg?v=1723026073"
                 alt="">
@@ -19,14 +28,23 @@
                 alt="">
             <img src="https://crazycrafti.shop/cdn/shop/files/61_600x.jpg?v=1722661992" alt="">
         </div>
+        @endif
 
+        @if(!empty($products))
+        <h1 class="h2">{{$products->name}}</h1>
+        @else
         <h1 class="h2">Organic Plant Boost (PACK OF 3)</h1>
+        @endisset
+
+
 
         <div class="d-flex align-items-center my-3">
-            <span class="visually-hidden">Sale price</span><span class="h2 fw-bold text-danger me-3">Rs. 499.00</span>
+            <span class="visually-hidden">Sale price</span><span class="h2 fw-bold text-danger me-3">Rs.
+                {{!empty($products->price) ? $products->price : 499.00}}</span>
             <span class="visually-hidden">Regular price</span><span
-                class="h2 fw-normal text-decoration-line-through">Rs. 1,299.00</span>
-            <span class="badge bg-danger ms-5">Save 62%</span>
+                class="h2 fw-normal text-decoration-line-through">Rs. {{!empty($products->old_price) ?
+                $products->old_price : 1299.00}}</span>
+            <span class="badge bg-danger ms-5">Save {{!empty($products->offer) ? $products->offer : 62}}%</span>
         </div>
 
         <div class="d-grid gap-2 pt-3">
@@ -130,7 +148,13 @@
             aria-labelledby="contactUs" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header border-0 align-items-start">
+                        <div class="w-100">
+                            <h4 class="text-uppercase text-center text-danger">Free Cash On Delivery</h4>
+                            <div class="text-center"><img src="{{url('/assets/img/logo2.png')}}" width="100" /></div>
+                            <h6 class="text-uppercase text-center text-danger my-2">Enter your Full and Correct Delivery
+                                Address</h6>
+                        </div>
                         <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -177,28 +201,27 @@
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="pin">@</span>
-                                <input name="pin" type="text" class="form-control" placeholder="Pincode"
+                                <input id="pincode" name="pin" type="text" class="form-control" placeholder="Pincode"
                                     aria-label="Pincode" aria-describedby="pin">
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="city">@</span>
-                                <input name="city" type="text" class="form-control" placeholder="City" aria-label="City"
-                                    aria-describedby="city">
+                                <input id="cityname" name="city" type="text" class="form-control" placeholder="City"
+                                    aria-label="City" aria-describedby="city">
                             </div>
 
-                            <select name="state" class="form-select mb-3" aria-label="State">
-                                <option selected>State</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select id="state" name="state" class="form-select mb-3" aria-label="State">
+                                <option selected disabled>State</option>
+                                @foreach($states as $state)
+                                <option value="{{$state->state}}">{{$state->state}}</option>
+                                @endforeach
                             </select>
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-danger">Buy Now</button>
+                                <button type="submit" class="btn btn-danger">Buy Now (Free COD)- Rs {{$products->price}}
+                                </button>
                             </div>
-
-
                         </form>
                     </div>
                 </div>
@@ -217,7 +240,47 @@
         </script>
         @endpush
 
+        @push('scripts')
+        <script type="text/javascript">
+            var tWidth = '100%';                  // width (in pixels)
+            var tHeight = '50px';                  // height (in pixels)
+            var tcolour = '#ffffcc';               // background colour:
+            var moStop = true;                     // pause on mouseover (true or false)
+            var fontfamily = 'arial,sans-serif'; // font for content
+            var tSpeed = 3;                        // scroll speed (1 = slow, 5 = fast)
+
+            // enter your ticker content here (use \/ and \' in place of / and ' respectively)
+            var content = 'Are you looking for loads of useful information <a href="http:\/\/javascript.about.com\/">About Javascript<\/a>? Well now you\'ve found it.';
+
+            var cps = -tSpeed;
+            var aw, mq;
+            var fsz = parseInt(tHeight) - 4;
+            function startticker() {
+                if (document.getElementById) {
+                    var tick = '<div style="position:relative;width:' + tWidth + ';height:' + tHeight + ';overflow:hidden;background-color:' + tcolour + '"';
+                    if (moStop) tick += ' onmouseover="cps=0" onmouseout="cps=-tSpeed"'; tick += '><div id="mq" style="position:absolute;right:0px;top:0px;font-family:' + fontfamily + ';font-size:' + fsz + 'px;white-space:nowrap;"><\/div><\/div>'; document.getElementById('ticker').innerHTML = tick; mq = document.getElementById("mq"); mq.style.right = (10 + parseInt(tWidth)) + "px"; mq.innerHTML = '<span id="tx">' + content + '<\/span>'; aw = document.getElementById("tx").offsetWidth; lefttime = setInterval("scrollticker()", 50);
+                }
+            } function scrollticker() {
+                mq.style.right = (parseInt(mq.style.right) > (-10 - aw)) ?
+                    mq.style.right = parseInt(mq.style.right) + cps + "px" : parseInt(tWidth) + 10 + "px";
+            } window.onload = startticker;
+        </script>
+        @endpush
+
         @include('default.components.footer')
     </div>
+    @push('scripts')
+    <script>
+        const product = @json($products);
+        const deliveryOptions = @json($deliveryOptions);
+        const pinCodeBox = document.getElementById('pincode');
+        pinCodeBox.addEventListener('keyup', function () {
+            let dOpts = deliveryOptions.filter((dOpt) => dOpt.pin == pinCodeBox.value);
+            dOpts = dOpts.length > 0 ? dOpts[0] : {};
+            const { pin, city, state } = dOpts;
+            document.getElementById('cityname').value = city;
+        });
+    </script>
+    @endpush
 
 </x-default-app-layout>
