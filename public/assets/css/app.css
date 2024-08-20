@@ -1,0 +1,57 @@
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 -10px #198754;
+    }
+    40% {
+        box-shadow: 0 0 20px #198754;
+    }
+    60% {
+        box-shadow: 0 0 20px #198754;
+    }
+    100% {
+        box-shadow: 0 0 -10px #198754;
+    }
+}
+
+.button-glow {
+    animation: glowing 5000ms infinite;
+}
+
+@media screen and (min-width: 576px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+footer h4 {
+    position: relative;
+    margin-bottom: 24px;
+}
+footer h4::after {
+    content: "";
+    position: absolute;
+    top: 125%;
+    left: 0;
+    width: 75px;
+    height: 3px;
+    background-color: #fff;
+}
+
+footer ul {
+    list-style: none;
+    padding-left: 0;
+}
+footer .social-links {
+    margin-bottom: 24px;
+}
+footer .social-links a:not(:last-child) {
+    margin-right: 20px;
+}
+footer a {
+    font-size: 14px;
+    color: #ece8e8;
+    text-decoration: none;
+}
+footer a:hover {
+    color: #dc3545;
+}
