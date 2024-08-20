@@ -6,6 +6,13 @@
     <div class="container">
         @include('default.components.navbar')
 
+        @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show my-2" role="alert">
+            <strong>{{ session('status') }}</strong>
+            <button type=" button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         @if($products && $products->images)
 
         <div class="slider">
@@ -278,7 +285,7 @@
             let dOpts = deliveryOptions.filter((dOpt) => dOpt.pin == pinCodeBox.value);
             dOpts = dOpts.length > 0 ? dOpts[0] : {};
             const { pin, city, state } = dOpts;
-            document.getElementById('cityname').value = city;
+            document.getElementById('cityname').value = city ?? '';
         });
     </script>
     @endpush

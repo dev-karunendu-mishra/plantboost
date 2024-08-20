@@ -40,7 +40,7 @@ class WebsiteController extends Controller
 
         // Store the order
         Order::create($validatedData);
-        $request->session()->flash('status', 'Your message has been sent successfully!');
+        $request->session()->flash('status', 'Your order has been placed successfully!');
         return redirect()->back();
     }
 }
