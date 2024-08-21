@@ -111,6 +111,58 @@
             </div>
         </div>
 
+        <!-- Notifications -->
+        <div class="row mb-3">
+            <div class="col">
+                <div>
+                    <label for="notification" class="form-label text-capitalize">Notification</label>
+                    <input name="notification" type="text"
+                        value="{{old('notification', !empty($settings) ? $settings->notification : '')}}"
+                        class="form-control @error('notification') is-invalid @enderror" id="notification" placeholder="Notification">
+                    @error('notification')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <label for="notification_2nd" class="form-label text-capitalize">Second Notification</label>
+                    <input name="notification_2nd" type="text" value="{{old('notification_2nd', !empty($settings) ? $settings->notification_2nd : '')}}"
+                        class="form-control @error('notification_2nd') is-invalid @enderror" id="notification_2nd" placeholder="Second Notification">
+                    @error('notification_2nd')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Track -->
+        <div class="row mb-3">
+            <div class="col">
+                <div>
+                    <label for="estimate_order_ready" class="form-label">Order will be ready in days</label>
+                    <input name="estimate_order_ready" type="text"
+                        value="{{old('estimate_order_ready', !empty($settings) ? $settings->estimate_order_ready : '')}}"
+                        class="form-control @error('estimate_order_ready') is-invalid @enderror" id="estimate_order_ready" placeholder="Order will be ready in days">
+                    @error('estimate_order_ready')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <label for="estimate_order_delivery" class="form-label">Order will be delivered in days</label>
+                    <input name="estimate_order_delivery" type="text" value="{{old('estimate_order_delivery', !empty($settings) ? $settings->estimate_order_delivery : '')}}"
+                        class="form-control @error('estimate_order_delivery') is-invalid @enderror" id="estimate_order_delivery" placeholder="Order will be delivered in days">
+                    @error('estimate_order_delivery')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="row mb-3">
             <div class="col">
                 <div>

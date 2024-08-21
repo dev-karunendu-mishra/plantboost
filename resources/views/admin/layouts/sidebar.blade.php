@@ -4,7 +4,7 @@
   <div>
     <div class="brand-logo d-flex align-items-center justify-content-between my-2">
       <a href="{{url('/')}}" class="text-nowrap logo-img">
-        <img src="{{url('/assets/img/logo2.png')}}" width="180" alt="" />
+        <img src="{{url('/assets/img/logo.png')}}" width="180" alt="" />
       </a>
       <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
         <i class="ti ti-x fs-8"></i>
@@ -59,6 +59,15 @@
               <i class="ti ti-layout-dashboard"></i>
             </span>
             <span class="hide-menu">Delivery Options</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="{{ route('admin.sliders') }}" aria-expanded="false">
+            <span>
+              <i class="ti ti-layout-dashboard"></i>
+            </span>
+            <span class="hide-menu">Sliders</span>
           </a>
         </li>
 

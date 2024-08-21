@@ -1,22 +1,22 @@
 <!-- Footer section open here -->
-<footer class="footer bg-dark text-light pt-4 px-3 pb-3">
+<footer class="footer bg-dark text-light pt-4 px-3 pb-3" style="max-width: 500px;margin-inline: auto;">
     <div class="row">
         <div class="col">
             <h4>Information</h4>
             <ul>
-                <li><a href="{{url('/refund-policy')}}">Return and Refund Policy</a></li>
-                <li><a href="{{url('/shipping-policy')}}">Shipping Policy</a></li>
-                <li><a href="{{url('/privacy-policy')}}">Privacy Policy</a></li>
-                <li><a href="{{url('/terms-of-service')}}">Terms of Service</a></li>
+                <li><a href="{{url('refund-policy')}}">Return and Refund Policy</a></li>
+                <li><a href="{{url('shipping-policy')}}">Shipping Policy</a></li>
+                <li><a href="{{url('privacy-policy')}}">Privacy Policy</a></li>
+                <li><a href="{{url('terms-of-service')}}">Terms of Service</a></li>
 
             </ul>
         </div>
         <div class="col">
             <h4>Quick Links</h4>
             <ul>
-                <li><a href="{{url('/about-us')}}">About Us</a></li>
+                <li><a href="{{url('about')}}">About Us</a></li>
 
-                <li><a href="{{url('/contact-us')}}">Contact Us</a></li>
+                <li><a href="{{url('contact')}}">Contact Us</a></li>
             </ul>
         </div>
 
@@ -30,7 +30,6 @@
             </div>
         </div>
     </div>
-    <div style="text-align:center;"><i class="fa fa-envelope-o"></i>Email: <span>support@crazycrafti.shop</span>
-    </div>
+    <div style="text-align:center;"><i class="fa fa-envelope-o"></i>Email: <span>support@crazycrafti.shop</span></div>
 </footer>
 <!-- Footer section close here -->

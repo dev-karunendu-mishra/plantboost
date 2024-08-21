@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('/')->group(function(){
-    Route::get('', [WebsiteController::class,'index']);
+    Route::get('', [WebsiteController::class,'index'])->name('index');
     Route::get('refund-policy', function () {
         return view('default.refund-policy');
     });
@@ -36,11 +36,14 @@ Route::prefix('/')->group(function(){
     Route::get('terms-of-service', function () {
         return view('default.terms-of-service');
     });
-    Route::get('about-us', function () {
+    Route::get('about', function () {
         return view('default.about');
     });
-    Route::get('contact-us', function () {
+    Route::get('contact', function () {
         return view('default.contact');
+    });
+    Route::get('faqs', function () {
+        return view('default.faq');
     });
     Route::post('placeOrder', [WebsiteController::class,'placeOrder'])->name('placeOrder');
 });

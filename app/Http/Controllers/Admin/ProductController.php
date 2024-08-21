@@ -107,7 +107,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             // 'tags' => 'array|exists:tags,id',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $product = Product::create($request->all());
@@ -172,7 +172,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             // 'tags' => 'array|exists:tags,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $product->update($request->all());

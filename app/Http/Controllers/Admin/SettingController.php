@@ -43,11 +43,23 @@ class SettingController extends Controller
         $request->validate([
             'title'=>'required',
             'description'=>'required',
+            'notification'=>'required',
+            'notification_2nd'=>'required',
+            'estimate_order_ready'=>'required',
+            'estimate_order_delivery'=>'required',
             'domain'=>'required',
             'address'=>'required',
             'mobile'=>'required',
             'email'=>'required',
             'logo'=>'required|mimes:png,jpg,jpeg,gif,svg',
+            'facebook'=>'nullable',
+            'twitter'=>'nullable',
+            'instagram'=>'nullable',
+            'linkedin'=>'nullable',
+            'youtube'=>'nullable',
+            'location'=>'nullable',
+            'branches'=>'nullable',
+            
         ]);
             // Handle file upload
         $logo=null;
@@ -64,7 +76,12 @@ class SettingController extends Controller
             $icon = $file->storeAs('uploads/logo', $fileName); // 'uploads' is the storage folder
         }
 
-        Setting::create(['title'=>$request->title, 'description'=>$request->description, 'domain'=>$request->domain, 'address'=>$request->address,'mobile'=>$request->mobile, 'email'=>$request->email, 'logo'=>$logo, 'icon'=>$icon, 'facebook'=>$request->facebook,'twitter'=>$request->twitter,'linkedin'=>$request->linkedin,'instagram'=>$request->instagram,'youtube'=>$request->youtube]);
+        $request->merge([
+            'logo' => $logo,
+            'icon' => $icon,
+        ]);
+
+        Setting::create($request->all());
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
@@ -89,16 +106,6 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
-        // $validatedData = $request->validate([
-        //     'title'=>'required',
-        //     'description'=>'required',
-        //     'domain'=>'required',
-        //     'address'=>'required',
-        //     'mobile'=>'required',
-        //     'email'=>'required',
-        //     'logo'=>'required|mimes:png,jpg,jpeg,gif,svg',
-        // ]);
-            // Handle file upload
         $logo=null;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
@@ -113,30 +120,14 @@ class SettingController extends Controller
             $icon = $file->storeAs('uploads/logo', $fileName); // 'uploads' is the storage folder
         }
 
-        $newSetting = [
-            'title'=>$request->title,
-            'description'=>$request->description,
-            'domain'=>$request->domain,
-            'address'=>$request->address,
-            'mobile'=>$request->mobile,
-            'email'=>$request->email,
-            'facebook'=>$request->facebook,
-            'twitter'=>$request->twitter,
-            'linkedin'=>$request->linkedin,
-            'instagram'=>$request->instagram,
-            'youtube'=>$request->youtube
-        ];
-
-        if($logo) {
-            $newSetting['logo'] = $logo;
-        }
-
-        if($icon) {
-            $newSetting['icon'] = $icon;
-        }
+    
+        $request->merge([
+            'logo' => !empty($logo) ? $logo : $setting->logo,
+            'icon' => !empty($icon) ? $icon : $setting->icon,
+        ]);
 
 
-        $setting->update($newSetting);
+        $setting->update($request->all());
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
 

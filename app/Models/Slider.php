@@ -8,10 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'sub_title', 'shop_link','image'];
-
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
+    protected $fillable = ['title', 'file_path', 'file_type'];
 }

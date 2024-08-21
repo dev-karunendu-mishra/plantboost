@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('sub_title');
-            $table->string('shop_link')->nullable();
-            $table->string('image');
-            $table->boolean('is_active')->default(true);
+            $table->string('title')->nullable();
+            $table->string('file_path');
+            $table->enum('file_type', ['image', 'video']);
             $table->timestamps();
         });
     }

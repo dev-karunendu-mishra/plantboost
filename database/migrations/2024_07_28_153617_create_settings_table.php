@@ -17,11 +17,14 @@ return new class extends Migration
             $table->string('description');
             $table->string('domain');
             $table->string('notification')->nullable();
+            $table->string('notification_2nd')->nullable();
             $table->string('address')->nullable();
             $table->string('location')->nullable();
             $table->string('branches')->nullable();
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
+            $table->string('estimate_order_ready')->nullable();
+            $table->string('estimate_order_delivery')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->string('linkedin')->nullable();

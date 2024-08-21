@@ -1,15 +1,29 @@
 <x-default-app-layout>
     <div class="container">
-        @include('default.components.navbar')
-
         <h1 class="text-center">About Us</h1>
 
         <p class="img-responsive, p-head">OUR MISSION</p><br>
-        <p class="img-responsive, p-para">To demonstrate passion by delivering quality products and spread the WOW
-            factor
-            among our customers. We aspire to be a brand that caters to youth and accessories their lifestyle with funky
-            and
-            colorful accessories.</p><br>
+        <p class="img-responsive, p-para">PlantBoost operates with the aim of providing gardening supplies at the best
+            quality and price for its customers all over India. Aligning to our vision of healthy living for all, we
+            sell
+            only products that are safe and organic.</p><br>
+        <p class="img-responsive, p-head">Make in India</p>
+        <p></p><br>
+        <img src="https://upload.wikimedia.org/wikipedia/en/4/46/Make_In_India.png" class="img-fluid" alt="">
+        <p></p><br>
+        <p class="img-responsive, p-para">All products sold via PlantBoost are manufactured by us or by reputed
+            manufacturers from India. Every time you buy from PlantBoost, you are supporting local business from India
+            sustain and thrive and build a better and stronger India.</p><br>
+        <p class="img-responsive, p-para">We pride ourselves in regards to the support we offer to our customers. We
+            offer
+            multiple contact options so that the customer can get in touch with us easily in case of any concerns or
+            questions regarding their orders or the products listed. Customers can contact PlantBoost on the below
+            channels.
+        </p><br>
+        <p class="img-responsive, p-para">Email: support@plantboost.in </p><br>
+        <p class="img-responsive, p-para">With more than 150000 orders dispatched in a very short period of time,
+            Seed2Plant
+            aims at providing all garden essentials under one roof.</p><br>
         <p class="img-responsive, p-head">WHO ARE WE?</p>
         <p></p><br>
         <p class="img-responsive, p-para">We are not just another brand into e-commerce; unlocktrends is a brand
@@ -54,6 +68,6 @@
         </ul>
         <p></p><br>
 
-        @include('default.components.footer')
+    </div>
 
 </x-default-app-layout>

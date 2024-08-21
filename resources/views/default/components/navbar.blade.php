@@ -1,10 +1,17 @@
-<nav class="navbar navbar-light justify-content-between bg-light">
+<nav class="navbar navbar-light justify-content-between bg-light position-sticky shadow-sm py-0"
+    style="max-width: 500px;margin-inline: auto;top:0;z-index: 9999;">
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="/"><img src="{{url('/assets/img/logo2.png')}}" width="150" /></a>
+    <a class="navbar-brand" href="/">
+        @if(!empty($siteData))
+        <img src="{{ asset('storage/' . $siteData->logo) }}" class="img-fluid" alt="" style="height: 50px;">
+        @else
+        <img src="assets/img/logo.png" class="img-fluid" alt="" style="height: 50px;">
+        @endif
+    </a>
 
     <svg class="icon icon-cart-empty" height="2.6em" width="2.6em" aria-hidden="true" focusable="false"
         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
@@ -13,11 +20,19 @@
             fill="currentColor" fill-rule="evenodd"></path>
     </svg>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse p-3" id="navbarSupportedContent">
+        <div class="text-end">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fa fa-times fa-2x"></i>
+            </button>
+        </div>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="{{url('/about-us')}}">About us</a>
-                <a class="nav-link" href="{{url('/contact-us')}}">Contact us</a>
+                <a class="nav-link h2 fw-bold text-dark mb-3" href="{{url('about')}}">About us</a>
+                <a class="nav-link h2 fw-bold text-dark mb-3" href="{{url('faqs')}}">Faqs
+                    <a class="nav-link h2 fw-bold text-dark" href="{{url('contact')}}">Contact us</a>
             </li>
         </ul>
     </div>

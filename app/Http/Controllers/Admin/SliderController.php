@@ -17,7 +17,7 @@ class SliderController extends Controller
     private $createMessage = 'Slider created successfully.';
     private $updateMessage = 'Slider updated successfully.';
 
-    public $columns = ["id"=>"ID", "title"=>"Title", "sub_title"=>"SubTitle", "image"=>"Slider Image", "created_at"=>"Created At"];
+    public $columns = ["id"=>"ID", "title"=>"Title", "file_path"=>"Slider", "created_at"=>"Created At"];
 
     public $fields = [
         "title"=>[
@@ -27,26 +27,13 @@ class SliderController extends Controller
             "label"=>"Slider's Title",
             "placeholder"=>"Slider's Title"
         ],
-        "sub_title"=>[
-            "id"=>"subTitle",
-            "name"=>"sub_title",
-            "type"=>"text",
-            "label"=>"Slider's SubTitle",
-            "placeholder"=>"Slider's SubTitle"
-        ],
-        "shop_link"=>[
-            "id"=>"shopLink",
-            "name"=>"shop_link",
-            "type"=>"text",
-            "label"=>"Shop Link",
-            "placeholder"=>"Shop Link"
-        ],
-        "image"=>[
-            "id"=>"sliderImage",
-            "name"=>"image",
+        
+        "slider_file"=>[
+            "id"=>"slider_file",
+            "name"=>"slider_file",
             "type"=>"file",
-            "label"=>"Slider Image",
-            "placeholder"=>"Slider Image"
+            "label"=>"Slider File",
+            "placeholder"=>"Slider File"
         ]
     ];
     /**
@@ -71,22 +58,46 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the request
         $request->validate([
-            'title'=>'required',
-            'sub_title'=>'required',
-            'shop_link'=>'nullable',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'title' => 'nullable|string|max:255',
+            'slider_file' => 'required|file|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi|max:10240', // 10MB max size
         ]);
 
-        // Handle file upload
-        $filePath=null;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads/sliders', $fileName);
+
+        // Handle the file upload
+        if ($request->hasFile('slider_file')) {
+            $file = $request->file('slider_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            // Determine the file type
+            $fileType = $file->getMimeType();
+            $type = strpos($fileType, 'image') !== false ? 'image' : 'video';
+
+            // Store the file in the public directory
+            $filePath = $file->storeAs('uploads/sliders', $filename);
+
+            // Create a slider record
+            Slider::create([
+                'title' => $request->input('title'),
+                'file_path' => $filePath,
+                'file_type' => $type,
+            ]);
+
+            //return redirect()->back()->with('success', 'Slider uploaded successfully!');
         }
 
-        Slider::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'shop_link'=>$request->shop_link, 'image'=>$filePath]);
+        //return redirect()->back()->with('error', 'No file uploaded.');
+
+        // // Handle file upload
+        // $filePath=null;
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $fileName = time() . '_' . $file->getClientOriginalName();
+        //     $filePath = $file->storeAs('uploads/sliders', $fileName);
+        // }
+
+        // Slider::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'shop_link'=>$request->shop_link, 'image'=>$filePath]);
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
@@ -111,22 +122,31 @@ class SliderController extends Controller
      */
     public function update(Request $request, Slider $slider)
     {
+        // Validate the request
         $request->validate([
-            'title'=>'required',
-            'sub_title'=>'required',
-            'shop_link'=>'nullable',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'title' => 'nullable|string|max:255',
+            'slider_file' => 'required|file|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi|max:10240', // 10MB max size
         ]);
 
-        // Handle file upload
-        $filePath=null;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads/sliders', $fileName);
-        }
+         // Handle the file upload
+        if ($request->hasFile('slider_file')) {
+            $file = $request->file('slider_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            // Determine the file type
+            $fileType = $file->getMimeType();
+            $type = strpos($fileType, 'image') !== false ? 'image' : 'video';
 
-        $slider->create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'shop_link'=>$request->shop_link, 'image'=>$filePath]);
+            // Store the file in the public directory
+            $filePath = $file->storeAs('uploads/sliders', $filename);
+
+            // Create a slider record
+            $slider->update([
+                'title' => $request->input('title'),
+                'file_path' => $filePath,
+                'file_type' => $type,
+            ]);
+        }
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
 

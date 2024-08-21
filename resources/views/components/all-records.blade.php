@@ -22,6 +22,12 @@
             @case('images')
             <td><img src="{{asset('storage/' . $record->$key[0]->path)}}" class="img-thumbnail" alt="{{$record->$key[0]->path}}" height="75" width="75"/></td>
             @break
+            @case('file_path')
+            <td><img src="{{asset('storage/' . $record->$key)}}" class="img-thumbnail" alt="{{$record->$key}}" height="75" width="75"/></td>
+            @break
+            @case('profile')
+            <td><img src="{{asset('storage/' . $record->$key)}}" class="img-thumbnail" alt="{{$record->$key}}" height="75" width="75"/></td>
+            @break
             @case('parent')
             <td>{{!empty($record->$key) ? $record->$key->name : 'NA'}}</td>
             @break
