@@ -133,8 +133,8 @@
         </div>
 
         @include('default.components.wave-notification')
-        @include('default.components.testimonial-slider')
         @include('default.components.slider')
+        @include('default.components.testimonial-slider')
     </div>
 
     @include('default.components.order-form')
