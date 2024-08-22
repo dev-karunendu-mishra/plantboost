@@ -71,6 +71,8 @@
                         <option id="{{$state->state}}" value="{{$state->state}}">{{$state->state}}</option>
                         @endforeach
                     </select>
+                    <!-- Hidden input to submit the value -->
+                    <input id='selected_state' type="hidden" name="state" value="">
 
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-danger">Buy Now (Free COD)- Rs
@@ -99,13 +101,18 @@
     const product = @json($products);
     const deliveryOptions = @json($deliveryOptions);
     const pinCodeBox = document.getElementById('pincode');
+    const selectBox = document.getElementById('state');
+
+    selectBox.addEventListener('change', function(){
+        document.getElementById('selected_state').value = selectBox.value;
+    });
+
     pinCodeBox.addEventListener('keyup', function () {
         let dOpts = deliveryOptions.filter((dOpt) => dOpt.pin == pinCodeBox.value);
         dOpts = dOpts.length > 0 ? dOpts[0] : {};
         const { pin, city, state } = dOpts;
         document.getElementById('cityname').value = city ?? '';
 
-        let selectBox = document.getElementById('state');
         // Loop through each option in the select box
         if(state) {
             for (let i = 0; i < selectBox.options.length; i++) {
@@ -115,6 +122,8 @@
             if (optionVal === state.toLowerCase()) {
                 selectBox.selectedIndex = i;
                 selectBox.disabled=true;
+                document.getElementById('selected_state').value = selectBox.options[i].value;
+                //selectBox.value = selectBox.options[i].value;
                 break; // Stop the loop once we find a match
             }
         }
