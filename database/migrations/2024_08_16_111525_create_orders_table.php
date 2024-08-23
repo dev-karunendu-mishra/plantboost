@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id')->unique(); // Custom order ID with prefix
             $table->string('name');
             $table->string('mobile');
             $table->string('address_line_one');

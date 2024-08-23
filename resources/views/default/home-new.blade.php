@@ -10,6 +10,16 @@
 
         @if(!empty($products))
         <h1 class="h2">{{$products->name}}</h1>
+        <div class="d-flex align-items-center py-2">
+            <div class="star">
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+            </div>
+            <span class="ms-2">({{$products->reviews}} Reviews)</span>
+        </div>
         <div class="d-flex align-items-center my-3">
             <span class="visually-hidden">Sale price</span><span class="h2 fw-bold text-danger me-2 mb-0">Rs.
                 {{$products->price}}</span>
@@ -19,6 +29,16 @@
         </div>
         @else
         <h1 class="h2">Organic Plant Boost (PACK OF 3)</h1>
+        <div class="d-flex align-items-center py-2">
+            <div class="star">
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-warning"></i>
+            </div>
+            <span class="ms-2">(7865 Reviews)</span>
+        </div>
         <div class="d-flex align-items-center my-3">
             <span class="visually-hidden">Sale price</span><span class="h2 fw-bold text-danger me-2 mb-0">Rs.
                 499.00</span>
