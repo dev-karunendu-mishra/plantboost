@@ -214,14 +214,15 @@ footer a:hover {
     display: none;
     position: fixed;
     bottom: 2%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0%;
+    right: 0%;
+    margin-inline: auto;
     max-width: 450px;
     width: 100%;
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
-    animation-name: shake-footer;
+    animation-name: shake;
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
@@ -331,4 +332,53 @@ footer a:hover {
 }
 #contactUs .modal-dialog .modal-content {
     height: 100%;
+    border-radius: 0 !important;
+}
+
+@keyframes shake {
+    0% {
+        left: 0;
+    }
+    10% {
+        left: -3px;
+    } /* Adjust the distance moved in each step */
+    20% {
+        left: 5px;
+    }
+    30% {
+        left: -8px;
+    }
+    40% {
+        left: 8px;
+    }
+    50% {
+        left: -5px;
+    }
+    60% {
+        left: 3px;
+    }
+    70% {
+        left: 0;
+    }
+}
+
+#shake-btn-buynow {
+    animation-name: shake;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+}
+
+/* Modal Slide In and Out from the Left */
+.slide-modal .modal-dialog {
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
+}
+
+.slide-modal.show .modal-dialog {
+    transform: translateX(0);
+}
+
+.slide-modal .modal-backdrop {
+    opacity: 0.5; /* You can adjust the backdrop opacity if needed */
 }

@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="contactUs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal slide-modal" id="contactUs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="contactUs" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
