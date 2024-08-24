@@ -16,7 +16,7 @@ class OrderController extends Controller
     private $createMessage = 'Order created successfully.';
     private $updateMessage = 'Order updated successfully.';
 
-    private $columns = ["id"=>"ID", "name"=>"Name", "mobile"=>"Mobile","client_ip"=>"Client IP", "pin"=>"PIN","city"=>"City", "state"=>"State", "created_at"=>"Created At"];
+    private $columns = ["id"=>"ID", "order_id"=>"Order ID", "name"=>"Name", "mobile"=>"Mobile","client_ip"=>"Client IP", "pin"=>"PIN","city"=>"City", "state"=>"State", "created_at"=>"Created At"];
     /**
      * Display a listing of the resource.
      */

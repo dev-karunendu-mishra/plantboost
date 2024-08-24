@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('mobile');
             $table->string('address_line_one');
-            $table->string('address_line_two');
+            $table->string('address_line_two')->nullable();
             $table->string('pin');
             $table->string('city');
             $table->string('state');

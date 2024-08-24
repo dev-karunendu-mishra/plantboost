@@ -164,7 +164,8 @@
     </div>
 
     @include('default.components.order-form')
-    <button id="footer_sticky_btn" class="btn" data-bs-toggle="modal" data-bs-target="#contactUs">Order Now</button>
+    <button id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs">Order
+        Now</button>
 
     @push('scripts')
     <script>

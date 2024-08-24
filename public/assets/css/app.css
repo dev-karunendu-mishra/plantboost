@@ -1,11 +1,18 @@
-
 @keyframes glowing {
-    0% { box-shadow: 0 0 -10px #dc3545; }
-    40% { box-shadow: 0 0 20px #dc3545; }
-    60% { box-shadow: 0 0 20px #dc3545; }
-    100% { box-shadow: 0 0 -10px #dc3545; }
+    0% {
+        box-shadow: 0 0 -10px #dc3545;
+    }
+    40% {
+        box-shadow: 0 0 20px #dc3545;
+    }
+    60% {
+        box-shadow: 0 0 20px #dc3545;
+    }
+    100% {
+        box-shadow: 0 0 -10px #dc3545;
+    }
 }
-  
+
 .button-glow {
     animation: glowing 5000ms infinite;
 }
@@ -25,14 +32,30 @@
 }
 
 @keyframes shake {
-  0% {left: 0}
-  10% {left: -3px} /* Adjust the distance moved in each step */
-  20% {left: 5px}
-  30% {left: -8px}
-  40% {left: 8px}
-  50% {left: -5px}
-  60% {left: 3px}
-  70% {left: 0}
+    0% {
+        left: 0;
+    }
+    10% {
+        left: -3px;
+    } /* Adjust the distance moved in each step */
+    20% {
+        left: 5px;
+    }
+    30% {
+        left: -8px;
+    }
+    40% {
+        left: 8px;
+    }
+    50% {
+        left: -5px;
+    }
+    60% {
+        left: 3px;
+    }
+    70% {
+        left: 0;
+    }
 }
 
 .waves {
@@ -45,26 +68,26 @@
     left: 0;
 }
 
-.parallax>use {
-    animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
 }
 
-.parallax>use:nth-child(1) {
+.parallax > use:nth-child(1) {
     animation-delay: -2s;
     animation-duration: 10s;
 }
 
-.parallax>use:nth-child(2) {
+.parallax > use:nth-child(2) {
     animation-delay: -3s;
     animation-duration: 15s;
 }
 
-.parallax>use:nth-child(3) {
+.parallax > use:nth-child(3) {
     animation-delay: -4s;
     animation-duration: 20s;
 }
 
-.parallax>use:nth-child(4) {
+.parallax > use:nth-child(4) {
     animation-delay: -5s;
     animation-duration: 30s;
 }
@@ -79,12 +102,11 @@
     }
 }
 
-
 /*Shrinking for mobile*/
 
 @media (max-width: 768px) {
     .waves {
-        height:75px;
+        height: 75px;
         min-height: 75px;
     }
 }
@@ -103,7 +125,7 @@
     margin-inline: auto;
 }
 
-.review-slider .card img{
+.review-slider .card img {
     height: 400px;
     object-fit: cover;
 }
@@ -112,7 +134,7 @@
     position: relative;
 }
 .order-track::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 14px;
     z-index: 0;
@@ -150,7 +172,7 @@ footer h4 {
     padding-bottom: 16px;
 }
 footer h4::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 80%;
     left: 0;
@@ -197,7 +219,6 @@ footer a:hover {
     max-width: 450px;
     width: 100%;
     color: #fff;
-    background: #60bb2a;
     text-transform: uppercase;
     font-weight: 600;
     animation-name: shake-footer;
@@ -205,14 +226,109 @@ footer a:hover {
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
     z-index: 9999999;
-  }
-  @keyframes shake-footer {
-    0% { transform: translateX(-50%) rotate(0deg); }
-    10% { transform: translateX(-50%) rotate(-5deg); } /* Adjusted rotation angle */
-    20% { transform: translateX(-50%) rotate(5deg); }
-    30% { transform: translateX(-50%) rotate(-3deg); }
-    40% { transform: translateX(-50%) rotate(3deg); }
-    50% { transform: translateX(-50%) rotate(-2deg); }
-    60% { transform: translateX(-50%) rotate(2deg); }
-    70% { transform: translateX(-50%) rotate(0deg); }
-  }
+}
+@keyframes shake-footer {
+    0% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+    10% {
+        transform: translateX(-50%) rotate(-5deg);
+    } /* Adjusted rotation angle */
+    20% {
+        transform: translateX(-50%) rotate(5deg);
+    }
+    30% {
+        transform: translateX(-50%) rotate(-3deg);
+    }
+    40% {
+        transform: translateX(-50%) rotate(3deg);
+    }
+    50% {
+        transform: translateX(-50%) rotate(-2deg);
+    }
+    60% {
+        transform: translateX(-50%) rotate(2deg);
+    }
+    70% {
+        transform: translateX(-50%) rotate(0deg);
+    }
+}
+
+.product-view-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.main-image {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.thumbnails-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.thumbnails-wrapper {
+    display: flex;
+    overflow: hidden;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+}
+
+.thumbnails-wrapper img {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin-right: 10px;
+    object-fit: cover;
+    width: 100px;
+    transition: border-color 0.3s ease;
+}
+
+.thumbnails-wrapper img:hover,
+.thumbnails-wrapper img.active {
+    border-color: #007bff;
+}
+
+.arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.arrow-btn.left {
+    left: -20px;
+}
+
+.arrow-btn.right {
+    right: -20px;
+}
+
+#contactUs {
+    z-index: 999999999;
+}
+#contactUs .modal-dialog {
+    margin-block: 0;
+    height: 100%;
+}
+#contactUs .modal-dialog .modal-content {
+    height: 100%;
+}
