@@ -382,3 +382,7 @@ footer a:hover {
 .slide-modal .modal-backdrop {
     opacity: 0.5; /* You can adjust the backdrop opacity if needed */
 }
+
+.btn {
+    padding: 0.575rem 0.75rem;
+}
