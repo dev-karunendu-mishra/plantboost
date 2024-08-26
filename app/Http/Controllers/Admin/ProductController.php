@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -201,5 +202,21 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
+    }
+
+    public function deleteImage($imageId)
+    {
+        // Find the image by ID
+        $image = Image::findOrFail($imageId);
+        
+        // Delete the image file from storage
+        if (Storage::disk('public')->exists($image->path)) {
+            Storage::disk('public')->delete($image->path);
+        }
+        
+        // Delete the image record from the database
+        $image->delete();
+
+        return redirect()->back()->with('success', 'Image deleted successfully.');
     }
 }

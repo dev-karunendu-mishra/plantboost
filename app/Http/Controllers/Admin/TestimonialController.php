@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Testimonial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
@@ -16,36 +17,36 @@ class TestimonialController extends Controller
     private $createMessage = 'Testimonial created successfully.';
     private $updateMessage = 'Testimonial updated successfully.';
 
-    public $columns = ["id"=>"ID", "name"=>"Name", "description"=>"Description", "profile"=>"Profile", "created_at"=>"Created At"];
+    public $columns = ["id" => "ID", "name" => "Name", "description" => "Description", "profile" => "Profile", "created_at" => "Created At"];
 
     public $fields = [
-        "name"=>[
-            "id"=>"tname",
-            "name"=>"name",
-            "type"=>"text",
-            "label"=>"User's Name",
-            "placeholder"=>"User's Name"
+        "name" => [
+            "id" => "tname",
+            "name" => "name",
+            "type" => "text",
+            "label" => "User's Name",
+            "placeholder" => "User's Name"
         ],
-        "description"=>[
-            "id"=>"tdescription",
-            "name"=>"description",
-            "type"=>"textarea",
-            "label"=>"Description",
-            "placeholder"=>"Description"
+        "description" => [
+            "id" => "tdescription",
+            "name" => "description",
+            "type" => "textarea",
+            "label" => "Description",
+            "placeholder" => "Description"
         ],
-        "profile"=>[
-            "id"=>"image",
-            "name"=>"profile",
-            "type"=>"file",
-            "label"=>"Profile",
-            "placeholder"=>"Profile"
+        "profile" => [
+            "id" => "image",
+            "name" => "profile",
+            "type" => "file",
+            "label" => "Profile",
+            "placeholder" => "Profile"
         ],
-        "image"=>[
-            "id"=>"image",
-            "name"=>"image[]",
-            "type"=>"file",
-            "label"=>"Testimonial Media",
-            "placeholder"=>"Testimonial Media"
+        "image" => [
+            "id" => "image",
+            "name" => "image[]",
+            "type" => "file",
+            "label" => "Testimonial Media",
+            "placeholder" => "Testimonial Media"
         ]
     ];
 
@@ -57,7 +58,7 @@ class TestimonialController extends Controller
     public function index()
     {
         $testimonials = Testimonial::all();
-        return view($this->indexView,['columns'=>$this->columns,'fields'=>$this->fields,'edit'=>false,'testimonials'=>$testimonials,'model'=>null]);
+        return view($this->indexView, ['columns' => $this->columns, 'fields' => $this->fields, 'edit' => false, 'testimonials' => $testimonials, 'model' => null]);
     }
 
     /**
@@ -80,15 +81,15 @@ class TestimonialController extends Controller
             'image.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480',
         ]);
 
-         // Handle file upload
-        $profile=null;
+        // Handle file upload
+        $profile = null;
         if ($request->hasFile('profile')) {
             $file = $request->file('profile');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $profile = $file->storeAs('uploads/testimonials/profile', $fileName); // 'uploads' is the storage folder
         }
 
-        $testimonial = Testimonial::create(["name"=>$request->name, "description"=>$request->description, "profile"=>$profile]);
+        $testimonial = Testimonial::create(["name" => $request->name, "description" => $request->description, "profile" => $profile]);
         if ($request->hasFile('image')) {
             // $file = $request->file('image');
             // $fileName = time() . '_' . $file->getClientOriginalName();
@@ -119,7 +120,7 @@ class TestimonialController extends Controller
      */
     public function edit(Testimonial $testimonial)
     {
-        return view($this->editView,['columns'=>$this->columns,'fields'=>$this->fields, 'model'=>$testimonial, 'edit'=>true]);
+        return view($this->editView, ['columns' => $this->columns, 'fields' => $this->fields, 'model' => $testimonial, 'edit' => true]);
     }
 
     /**
@@ -134,14 +135,14 @@ class TestimonialController extends Controller
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20480',
         ]);
 
-         // Handle file upload
-        $profile=null;
+        // Handle file upload
+        $profile = null;
         if ($request->hasFile('profile')) {
             $file = $request->file('profile');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $profile = $file->storeAs('uploads/testimonials/profile', $fileName); // 'uploads' is the storage folder
         }
-        $testimonial->update(["name"=>$request->name, "description"=>$request->description, "profile"=>$profile ? $profile : $testimonial->profile]);
+        $testimonial->update(["name" => $request->name, "description" => $request->description, "profile" => $profile ? $profile : $testimonial->profile]);
 
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $file) {
@@ -161,6 +162,16 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
+        // Delete associated images
+        foreach ($testimonial->images as $image) {
+            // Assuming images are stored in public disk
+            if (Storage::disk('public')->exists($image->path)) {
+                Storage::disk('public')->delete($image->path);
+            }
+            // Optionally, delete the image record from the database
+            $image->delete();
+        }
+        $testimonial->delete();
         $testimonial->delete();
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }

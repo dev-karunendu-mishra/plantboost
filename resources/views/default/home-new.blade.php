@@ -60,6 +60,9 @@
         <!-- Order Track -->
         @include('default.components.order-track')
 
+        @if(!empty($products) && !empty($products->description))
+        {!! $products->description !!}
+        @else
         <div class="row mt-5">
             <div class="col-12">
                 <img src="{{url('assets/img/shield-icon.png')}}" alt="" class="img-fluid">
@@ -157,6 +160,7 @@
                 safe for pets.</p>
             <!---->
         </div>
+        @endif
 
         @include('default.components.wave-notification')
         @include('default.components.slider')
@@ -169,7 +173,9 @@
 
     @push('scripts')
     <script>
-        window.onscroll = function () { buyatcbtnsticky() };
+        window.onscroll = function() {
+            buyatcbtnsticky()
+        };
 
         function buyatcbtnsticky() {
             if (document.documentElement.scrollTop > 750) {

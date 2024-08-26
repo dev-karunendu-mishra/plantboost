@@ -50,6 +50,28 @@
                 aw = document.getElementById("tx").offsetWidth; lefttime=setInterval("scrollticker()",50);}} function scrollticker(){mq.style.right = (parseInt(mq.style.right)>(-10 - aw)) ?
                 mq.style.right = parseInt(mq.style.right)+cps+"px": parseInt(tWidth)+10+"px";} window.onload=startticker;
     </script> -->
+
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '799814715643086');
+        //fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=799814715643086&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
 </head>
 
 <body>
@@ -57,7 +79,7 @@
     {{-- Your component goes here --}}
     <marquee class="h5 fw-bold text-white position-relative mb-0 py-2" behavior="scrolling" direction="left"
         style="max-width: 500px;left: 50%;transform: translateX(-50%);background-color: #60bb2a;">
-    {{!empty($siteData) ? $siteData->notification : 'WELCOME! The Best Shop
+        {{!empty($siteData) ? $siteData->notification : 'WELCOME! The Best Shop
         for your Plants!!! Delivering Happiness, Health and Growth for your PLANTS All Over INDIA!!!'}}</marquee>
     @endif
 

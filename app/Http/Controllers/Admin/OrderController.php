@@ -16,14 +16,14 @@ class OrderController extends Controller
     private $createMessage = 'Order created successfully.';
     private $updateMessage = 'Order updated successfully.';
 
-    private $columns = ["id"=>"ID", "order_id"=>"Order ID", "name"=>"Name", "mobile"=>"Mobile","client_ip"=>"Client IP", "pin"=>"PIN","city"=>"City", "state"=>"State", "created_at"=>"Created At"];
+    private $columns = ["order_id" => "Order ID", "name" => "Name", "client_ip" => "Customer IP", "address_line_one" => "Address 1", "address_line_two" => "Landmark", "pin" => "PIN", "city" => "City", "state" => "State", "mobile" => "Phone","source"=>"Source", "created_at" => "Created At"];
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $records = Order::with(['product'])->get();
-        return view($this->indexView,['columns'=>$this->columns,'edit'=>false,'records'=>$records,'model'=>null]);
+        return view($this->indexView, ['columns' => $this->columns, 'edit' => false, 'records' => $records, 'model' => null]);
     }
 
     /**
@@ -53,8 +53,8 @@ class OrderController extends Controller
         ]);
         // Check if an order exists with the same mobile number in the last 30 days
         $existingOrder = Order::where('mobile', $validatedData['mobile'])
-                    ->where('created_at', '>=', now()->subDays(30))
-                    ->exists();
+            ->where('created_at', '>=', now()->subDays(30))
+            ->exists();
 
         if ($existingOrder) {
             return redirect()->back()->withErrors(['mobile' => 'You cannot place another order with this mobile number within a month.'])->withInput();
@@ -82,7 +82,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view($this->editView,['columns'=>$this->columns, 'model'=>$order, 'edit'=>true]);
+        return view($this->editView, ['columns' => $this->columns, 'model' => $order, 'edit' => true]);
     }
 
     /**

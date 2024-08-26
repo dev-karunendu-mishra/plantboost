@@ -1,4 +1,4 @@
-@if(!empty($products))
+@if(!empty($products) && count($products->images) > 0 )
 <div class="slider">
     @foreach($products->images as $image)
     <img src="{{ asset('storage/' . $image->path) }}" alt="">

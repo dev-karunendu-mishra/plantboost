@@ -23,6 +23,52 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('/')->group(function(){
+    Route::get('link', function(){
+        Artisan::call('storage:link');
+        $target = $_SERVER['DOCUMENT_ROOT'] . '/storage/app/uploads';
+        $link = $_SERVER['DOCUMENT_ROOT'] . '/public/uploads';
+        // Check if the symlink or directory already exists
+        // Check if the symlink or directory already exists
+        // Function to recursively delete a directory and its contents
+        function deleteDirectory($dir) {
+            if (!is_dir($dir)) {
+                return false;
+            }
+
+            $items = array_diff(scandir($dir), array('.', '..'));
+
+            foreach ($items as $item) {
+                $path = $dir . DIRECTORY_SEPARATOR . $item;
+                if (is_dir($path)) {
+                    deleteDirectory($path);
+                } else {
+                    unlink($path);
+                }
+            }
+
+            return rmdir($dir);
+        }
+
+        // Check if the symlink or directory already exists
+        if (is_link($link)) {
+            // If it's a symlink, remove it
+            unlink($link);
+        } elseif (is_dir($link)) {
+            // If it's a directory, recursively delete it
+            deleteDirectory($link);
+        }
+        // Create the new symlink
+        symlink($target, $link);
+        return "Symlink created successfully!";
+    });
+    Route::get('/check-file', function () {
+    $path = public_path('storage/uploads/testimonials/profile/1724577998_Snapshot_27.png');
+    if (file_exists($path)) {
+        return response()->file($path);
+    } else {
+        return 'File not found';
+    }
+});
     Route::get('', [WebsiteController::class,'index'])->name('index');
     Route::get('refund-policy', function () {
         return view('default.refund-policy');
@@ -46,4 +92,16 @@ Route::prefix('/')->group(function(){
         return view('default.faq');
     });
     Route::post('placeOrder', [WebsiteController::class,'placeOrder'])->name('placeOrder');
+    Route::get('thankyou', function () {
+       // Retrieve order and product data from session
+        $order = session('order');
+        $product = session('product');
+
+        // Ensure that the session variables are available
+        if (!$order || !$product) {
+            return redirect('/'); // Redirect to homepage or another page if data isn't found
+        }
+
+        return view('default.thankyou', compact('order', 'product'));
+    })->name('thankyou');
 });

@@ -64,6 +64,7 @@
         @endforeach
 
     </tbody>
+    {{--
     <tfoot>
         <tr>
             @foreach($columns as $column)
@@ -73,7 +74,7 @@
             <th></th>
             @endif
         </tr>
-    </tfoot>
+    </tfoot>--}}
 </table>
 
 <script src="{{url('/template-resources/admin/assets/js/dt-table.js')}}"></script>

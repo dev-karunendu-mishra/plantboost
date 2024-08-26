@@ -19,7 +19,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet" />
   <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css"> -->
   <script src="{{url('/template-resources/admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
-  
+
   <style>
     .product-view-box {
       padding: 20px;
@@ -197,14 +197,42 @@
       media_external_list_url: "lists/media_list.js",
 
       // Style formats
-      style_formats: [
-        { title: 'Bold text', inline: 'b' },
-        { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
-        { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
-        { title: 'Example 1', inline: 'span', classes: 'example1' },
-        { title: 'Example 2', inline: 'span', classes: 'example2' },
-        { title: 'Table styles' },
-        { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
+      style_formats: [{
+          title: 'Bold text',
+          inline: 'b'
+        },
+        {
+          title: 'Red text',
+          inline: 'span',
+          styles: {
+            color: '#ff0000'
+          }
+        },
+        {
+          title: 'Red header',
+          block: 'h1',
+          styles: {
+            color: '#ff0000'
+          }
+        },
+        {
+          title: 'Example 1',
+          inline: 'span',
+          classes: 'example1'
+        },
+        {
+          title: 'Example 2',
+          inline: 'span',
+          classes: 'example2'
+        },
+        {
+          title: 'Table styles'
+        },
+        {
+          title: 'Table row 1',
+          selector: 'tr',
+          classes: 'tablerow1'
+        }
       ],
 
       // Replace values for the template plugin
@@ -218,8 +246,9 @@
   <script>
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-    const popover = new bootstrap.Popover('.popover-dismiss', { trigger: 'focus' });
-
+    const popover = new bootstrap.Popover('.popover-dismiss', {
+      trigger: 'focus'
+    });
   </script>
 
   @stack('scripts')

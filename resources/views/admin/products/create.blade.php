@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md">
-        <x-preview-images :images="$records->images" />
+        <x-preview-images :images="!empty($records->images) ? $records->images : null" />
     </div>
     <div class="col">
         <x-form-component :fields="$fields" :isEditing="$edit" actionRoute="{{route('admin.products.store')}}"
