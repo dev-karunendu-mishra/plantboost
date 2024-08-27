@@ -75,7 +75,7 @@ class SliderController extends Controller
             $type = strpos($fileType, 'image') !== false ? 'image' : 'video';
 
             // Store the file in the public directory
-            $filePath = $file->storeAs('uploads/sliders', $filename);
+            $filePath = $file->storeAs('uploads/sliders', $fileName, 'uploads');
 
             // Create a slider record
             Slider::create([
@@ -83,21 +83,7 @@ class SliderController extends Controller
                 'file_path' => $filePath,
                 'file_type' => $type,
             ]);
-
-            //return redirect()->back()->with('success', 'Slider uploaded successfully!');
         }
-
-        //return redirect()->back()->with('error', 'No file uploaded.');
-
-        // // Handle file upload
-        // $filePath=null;
-        // if ($request->hasFile('image')) {
-        //     $file = $request->file('image');
-        //     $fileName = time() . '_' . $file->getClientOriginalName();
-        //     $filePath = $file->storeAs('uploads/sliders', $fileName);
-        // }
-
-        // Slider::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'shop_link'=>$request->shop_link, 'image'=>$filePath]);
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
@@ -138,7 +124,7 @@ class SliderController extends Controller
             $type = strpos($fileType, 'image') !== false ? 'image' : 'video';
 
             // Store the file in the public directory
-            $filePath = $file->storeAs('uploads/sliders', $filename);
+            $filePath = $file->storeAs('uploads/sliders', $fileName, 'uploads');
 
             // Create a slider record
             $slider->update([

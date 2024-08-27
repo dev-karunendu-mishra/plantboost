@@ -10,8 +10,13 @@ use App\Models\Order;
 
 class WebsiteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Get the full URL with query parameters
+        $fullUrl = $request->fullUrl();
+        
+        // Store it in the session
+        $request->session()->put('ad_url', $fullUrl);
         $products = Product::first();
         return view('default.home-new', compact('products'));
     }
@@ -29,7 +34,6 @@ class WebsiteController extends Controller
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'product_id' => 'required|exists:products,id', // Ensures that the Order exists
-            'source' => 'nullable|string',
         ]);
         // Check if an order exists with the same mobile number in the last 30 days
         $existingOrder = Order::where('mobile', $validatedData['mobile'])
@@ -41,6 +45,7 @@ class WebsiteController extends Controller
         }
         // Capture the client IP
         $validatedData['client_ip'] = $request->ip();
+        $validatedData['source'] = $request->session()->get('ad_url');
 
         // Store the order
         $order = Order::create($validatedData);

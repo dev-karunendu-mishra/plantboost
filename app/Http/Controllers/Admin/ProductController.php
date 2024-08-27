@@ -112,29 +112,12 @@ class ProductController extends Controller
         ]);
 
         $product = Product::create($request->all());
-        // $product->tags()->sync($request->tags);
-
-        // if ($request->hasFile('images')) {
-        //     foreach ($request->file('images') as $image) {
-        //         $path = $image->store('images', 'public');
-        //         $product->images()->create(['path' => $path]);
-        //     }
-        //      $file = $request->file('image');
-        //     $fileName = time() . '_' . $file->getClientOriginalName();
-        //     $filePath = $file->storeAs('uploads/categories', $fileName); 
-        // }
-
         $filePath=null;
         if ($request->hasFile('image')) {
-            //forSingleFile
-            // $file = $request->file('image');
-            // $fileName = time() . '_' . $file->getClientOriginalName();
-            // $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
-            
-             // Handle file uploads
+            // Handle file uploads
             foreach ($request->file('image') as $file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
+                $filePath = $file->storeAs('uploads/products', $fileName, 'uploads'); // 'uploads' is the storage folder
                 // Save file path to the database
                 $product->images()->create([
                     'path' => $filePath,
@@ -179,13 +162,10 @@ class ProductController extends Controller
         $product->update($request->all());
 
         if ($request->hasFile('image')) {
-            // $file = $request->file('image');
-            // $fileName = time() . '_' . $file->getClientOriginalName();
-            // $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
             // Handle file uploads
             foreach ($request->file('image') as $file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/products', $fileName, 'public'); // 'uploads' is the storage folder
+                $filePath = $file->storeAs('uploads/products', $fileName, 'uploads'); // 'uploads' is the storage folder
                 // Save file path to the database
                 $product->images()->create([
                     'path' => $filePath,
@@ -200,6 +180,15 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // Delete associated images
+        foreach ($product->images as $image) {
+            // Assuming images are stored in public disk
+            if (Storage::disk('uploads')->exists($image->path)) {
+                Storage::disk('uploads')->delete($image->path);
+            }
+            // Optionally, delete the image record from the database
+            $image->delete();
+        }
         $product->delete();
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }
@@ -210,8 +199,8 @@ class ProductController extends Controller
         $image = Image::findOrFail($imageId);
         
         // Delete the image file from storage
-        if (Storage::disk('public')->exists($image->path)) {
-            Storage::disk('public')->delete($image->path);
+        if (Storage::disk('uploads')->exists($image->path)) {
+            Storage::disk('uploads')->delete($image->path);
         }
         
         // Delete the image record from the database

@@ -86,18 +86,15 @@ class TestimonialController extends Controller
         if ($request->hasFile('profile')) {
             $file = $request->file('profile');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $profile = $file->storeAs('uploads/testimonials/profile', $fileName); // 'uploads' is the storage folder
+            $profile = $file->storeAs('uploads/testimonials/profile', $fileName, 'uploads'); // 'uploads' is the storage folder
         }
 
         $testimonial = Testimonial::create(["name" => $request->name, "description" => $request->description, "profile" => $profile]);
         if ($request->hasFile('image')) {
-            // $file = $request->file('image');
-            // $fileName = time() . '_' . $file->getClientOriginalName();
-            // $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
             // Handle file uploads
             foreach ($request->file('image') as $file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/testimonials', $fileName); // 'uploads' is the storage folder
+                $filePath = $file->storeAs('uploads/testimonials', $fileName, 'uploads'); // 'uploads' is the storage folder
                 // Save file path to the database
                 $testimonial->images()->create([
                     'path' => $filePath,
@@ -140,14 +137,14 @@ class TestimonialController extends Controller
         if ($request->hasFile('profile')) {
             $file = $request->file('profile');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $profile = $file->storeAs('uploads/testimonials/profile', $fileName); // 'uploads' is the storage folder
+            $profile = $file->storeAs('uploads/testimonials/profile', $fileName, 'uploads'); // 'uploads' is the storage folder
         }
         $testimonial->update(["name" => $request->name, "description" => $request->description, "profile" => $profile ? $profile : $testimonial->profile]);
 
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/testimonials', $fileName); // 'uploads' is the storage folder
+                $filePath = $file->storeAs('uploads/testimonials', $fileName, 'uploads'); // 'uploads' is the storage folder
                 // Save file path to the database
                 $testimonial->images()->create([
                     'path' => $filePath,

@@ -1,4 +1,4 @@
-@if($images)
+@if(count($images) > 0)
 <div class="product-view-box text-center">
     <!-- Main Image -->
     <img id="mainProductImage" src="{{asset('storage/'.$images[0]->path)}}" class="main-image mb-3" alt="Product Image">
@@ -12,7 +12,7 @@
         <div class="thumbnails-wrapper">
             @foreach($images as $image)
             <img src="{{asset('storage/'.$image->path)}}" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 1">
+                alt="{{asset('storage/'.$image->path)}}" />
             @endforeach
         </div>
         <!-- <button class="arrow-btn right" onclick="scrollRight()">&gt;</button> -->

@@ -25,8 +25,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('/')->group(function(){
     Route::get('link', function(){
         Artisan::call('storage:link');
-        $target = $_SERVER['DOCUMENT_ROOT'] . '/storage/app/uploads';
-        $link = $_SERVER['DOCUMENT_ROOT'] . '/public/uploads';
+        $target = $_SERVER['DOCUMENT_ROOT'] . '/storage/uploads';
+        $link = $_SERVER['DOCUMENT_ROOT'] . '/public/storage/uploads';
         // Check if the symlink or directory already exists
         // Check if the symlink or directory already exists
         // Function to recursively delete a directory and its contents

@@ -66,14 +66,14 @@ class SettingController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $logo = $file->storeAs('uploads/logo', $fileName); // 'uploads' is the storage folder
+            $logo = $file->storeAs('uploads/logo', $fileName, 'uploads'); // 'uploads' is the storage folder
         }
         
         $icon=null;
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $icon = $file->storeAs('uploads/logo', $fileName); // 'uploads' is the storage folder
+            $icon = $file->storeAs('uploads/logo', $fileName, 'uploads'); // 'uploads' is the storage folder
         }
 
         $request->merge([
@@ -110,14 +110,14 @@ class SettingController extends Controller
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $logo = $file->storeAs('uploads/logo', $fileName); // 'uploads' is the storage folder
+            $logo = $file->storeAs('uploads/logo', $fileName, 'uploads'); // 'uploads' is the storage folder
         }
         
         $icon=null;
         if ($request->hasFile('icon')) {
             $file = $request->file('icon');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $icon = $file->storeAs('uploads/logo', $fileName); // 'uploads' is the storage folder
+            $icon = $file->storeAs('uploads/logo', $fileName, 'uploads'); // 'uploads' is the storage folder
         }
 
     
