@@ -22,7 +22,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $records = Order::with(['product'])->get();
+        $records = Order::with(['product'])->orderBy('created_at', 'desc')->get();
         return view($this->indexView, ['columns' => $this->columns, 'edit' => false, 'records' => $records, 'model' => null]);
     }
 

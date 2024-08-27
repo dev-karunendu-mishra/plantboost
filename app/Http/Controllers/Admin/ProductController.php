@@ -185,7 +185,7 @@ class ProductController extends Controller
             // Handle file uploads
             foreach ($request->file('image') as $file) {
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/products', $fileName); // 'uploads' is the storage folder
+                $filePath = $file->storeAs('uploads/products', $fileName, 'public'); // 'uploads' is the storage folder
                 // Save file path to the database
                 $product->images()->create([
                     'path' => $filePath,
