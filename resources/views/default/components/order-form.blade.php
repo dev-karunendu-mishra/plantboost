@@ -37,13 +37,13 @@
                         <span class="input-group-text" id="mobile" style="width: 40px;"><i
                                 class="fa fa-mobile"></i></span>
                         <input name="mobile" type="text" class="form-control" placeholder="Mobile" aria-label="Mobile"
-                            aria-describedby="mobile" oninput="validateNumber(this)" pattern="\d{1,10}" title="Please enter up to 10 digits" maxlength="10">
+                            aria-describedby="mobile" oninput="validateNumber(this)" pattern="\d{1,10}" title="Please enter up to 10 digits" maxlength="10" required/>
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="name" style="width: 40px;"><i class="fa fa-user"></i></span>
                         <input name="name" type="text" class="form-control" placeholder="Full Name"
-                            aria-label="Full Name" aria-describedby="name">
+                            aria-label="Full Name" minlength="3" aria-describedby="name" required/>
                     </div>
 
                     <div class="input-group mb-3">
@@ -51,7 +51,7 @@
                                 class="fa fa-map-marker"></i></span>
                         <input name="address_line_one" type="text" class="form-control"
                             placeholder="House No. & Colony/Apartment" aria-label="House No. & Colony/Apartment"
-                            aria-describedby="address_line_one">
+                            aria-describedby="address_line_one" minlength="4" required/>
                     </div>
 
 
@@ -59,7 +59,7 @@
                         <span class="input-group-text" id="address_line_two" style="width: 40px;"><i
                                 class="fa fa-map-marker"></i></span>
                         <input name="address_line_two" type="text" class="form-control" placeholder="Address & Landmark"
-                            aria-label="Address & Landmark" aria-describedby="address_line_two">
+                            aria-label="Address & Landmark" aria-describedby="address_line_two" minlength="5" required/>
                     </div>
 
 
@@ -67,17 +67,17 @@
                         <span class="input-group-text" id="pin" style="width: 40px;"><i
                                 class="fa fa-hashtag"></i></span>
                         <input id="pincode" name="pin" type="text" class="form-control" placeholder="Pincode"
-                            aria-label="Pincode" aria-describedby="pin" oninput="validateNumber(this)" pattern="\d{1,6}" title="Please enter up to 6 digits" maxlength="6"/>
+                            aria-label="Pincode" aria-describedby="pin" oninput="validateNumber(this)" pattern="\d{1,6}" title="Please enter up to 6 digits" maxlength="6" required/>
                     </div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="city" style="width: 40px;"><i
                                 class="fa fa-map-marker"></i></span>
                         <input id="cityname" name="city" type="text" class="form-control" placeholder="City"
-                            aria-label="City" aria-describedby="city">
+                            aria-label="City" aria-describedby="city" required/>
                     </div>
 
-                    <select id="state" name="state" class="form-select mb-3" aria-label="State">
+                    <select id="state" name="state" class="form-select mb-3" aria-label="State" required>
                         <option id="select_state" selected disabled>State</option>
                         @foreach($states as $state)
                         <option id="{{$state->state}}" value="{{$state->state}}">{{$state->state}}</option>

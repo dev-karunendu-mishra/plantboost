@@ -61,14 +61,6 @@ Route::prefix('/')->group(function(){
         symlink($target, $link);
         return "Symlink created successfully!";
     });
-    Route::get('/check-file', function () {
-    $path = public_path('storage/uploads/testimonials/profile/1724577998_Snapshot_27.png');
-    if (file_exists($path)) {
-        return response()->file($path);
-    } else {
-        return 'File not found';
-    }
-});
     Route::get('', [WebsiteController::class,'index'])->name('index');
     Route::get('refund-policy', function () {
         return view('default.refund-policy');

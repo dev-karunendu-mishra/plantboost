@@ -11,14 +11,11 @@
         @if(!empty($products))
         <h1 class="h2">{{$products->name}}</h1>
         <div class="d-flex align-items-center py-2">
+            <span class="ms-2">{{ number_format($products->rating, 2) }} </span>
             <div class="star">
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
+                <i class="fa-solid fa-star text-success"></i> |
             </div>
-            <span class="ms-2">({{$products->reviews}} Reviews)</span>
+            <span> &nbsp; {{ number_format($products->reviews / 1000, 2) }}k Reviews</span>
         </div>
         <div class="d-flex align-items-center my-3">
             <span class="visually-hidden">Sale price</span><span class="h2 fw-bold text-danger me-2 mb-0">Rs.
@@ -29,7 +26,7 @@
         </div>
         @else
         <h1 class="h2">Organic Plant Boost (PACK OF 3)</h1>
-        <div class="d-flex align-items-center py-2">
+        <div class="d-flex align-items- py-2">
             <div class="star">
                 <i class="fa-solid fa-star text-warning"></i>
                 <i class="fa-solid fa-star text-warning"></i>
@@ -51,9 +48,9 @@
 
         <!-- Order Now Button -->
         <div class="d-grid gap-2 pt-3">
-            <button class="btn btn-danger fw-bold rounded-pill shake-btn" type="button" data-bs-toggle="modal"
+            <button class="btn btn-success fw-bold rounded-pill shake-btn" type="button" data-bs-toggle="modal"
                 data-bs-target="#contactUs">
-                <span>Order Now - Cash on Delivery</span>
+                <span>Order Now - Cash on Delivery - {{!empty($products->price) ? $products->price : ''}}</span>
             </button>
         </div>
 
@@ -168,14 +165,12 @@
     </div>
 
     @include('default.components.order-form')
-    <button id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs">Order
-        Now - Cash on Delivery - {{!empty($products) ? $products->price : ''}} </button>
+    <button id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs">👉 Order
+        Now - Cash On Delivery <br />{{!empty($products->price) ? $products->price : ''}} </button>
 
     @push('scripts')
     <script>
-        window.onscroll = function() {
-            buyatcbtnsticky()
-        };
+        window.onscroll = function () { buyatcbtnsticky() };
 
         function buyatcbtnsticky() {
             if (document.documentElement.scrollTop > 750) {

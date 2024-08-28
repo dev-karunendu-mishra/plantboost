@@ -24,16 +24,15 @@ class WebsiteController extends Controller
     public function placeOrder(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            //'mobile' => 'required|string|regex:/^[0-9]{10}$/', // Assuming it's a 10-digit mobile number
-            'mobile' => ['required', 'digits:10', 'regex:/^[6-9]\d{9}$/'], // Indian mobile number validation
-            'pin' => ['required', 'digits:6'], // Indian pincode validation
-            'address_line_one' => 'required|string|max:255',
-            'address_line_two' => 'nullable|string|max:255',
-            //'pin' => 'required|string|size:6', // Assuming pin code is 6 digits
+            'name' => 'required|string|min:3|max:255', // Minimum 3 characters
+            'mobile' => ['required', 'regex:/^[6-9]\d{9}$/'], // Validation for mobile field
+            'address_line_one' => 'required|string|min:4|max:255', // Minimum 4 characters
+            'address_line_two' => 'nullable|string|min:5|max:255', // Minimum 5 characters if provided
+            'pin' => 'required|string|size:6', // Assuming pin code is 6 digits
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'product_id' => 'required|exists:products,id', // Ensures that the Order exists
+            'source' => 'nullable|string',
         ]);
         // Check if an order exists with the same mobile number in the last 30 days
         $existingOrder = Order::where('mobile', $validatedData['mobile'])
