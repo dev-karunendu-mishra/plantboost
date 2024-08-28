@@ -16,7 +16,7 @@
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade p-2 {{!$errors->any() ? 'active show' : ''}}" id="nav-home" role="tabpanel"
             aria-labelledby="nav-home-tab" tabindex="0">
-            <x-all-records :records="$records" :columns="$columns" enableActionColumn="{{false}}" model="orders" id="order"/>
+            <x-all-records :records="$records" :columns="$columns" enableActionColumn="{{false}}" model="orders" id="orders"/>
         </div>
     </div>
 </x-admin-app-layout>
