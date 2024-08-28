@@ -110,9 +110,9 @@ class ProductController extends Controller
             'reviews' => 'required|numeric',
             'rating' => 'required|numeric',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'seo_title' => 'required|string',
-            'seo_keywords' => 'required|string',
-            'seo_description' => 'required|string',
+            'seo_title' => 'nullable|string',
+            'seo_keywords' => 'nullable|string',
+            'seo_description' => 'nullable|string',
         ]);
 
         $product = Product::create($validatedData);

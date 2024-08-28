@@ -17,7 +17,7 @@ class TestimonialController extends Controller
     private $createMessage = 'Testimonial created successfully.';
     private $updateMessage = 'Testimonial updated successfully.';
 
-    public $columns = ["id" => "ID", "name" => "Name", "description" => "Description", "profile" => "Profile", "created_at" => "Created At"];
+    public $columns = ["id" => "ID", "name" => "Name", "description" => "Description", "images" => "Media", "created_at" => "Created At"];
 
     public $fields = [
         "name" => [

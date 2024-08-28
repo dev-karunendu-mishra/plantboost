@@ -57,11 +57,10 @@ class SliderController extends Controller
             'slider_file' => 'required|file|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi|max:10240', // 10MB max size
         ]);
 
-
         // Handle the file upload
         if ($request->hasFile('slider_file')) {
             $file = $request->file('slider_file');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $fileName = time() . '_' . $file->getClientOriginalName();
             
             // Determine the file type
             $fileType = $file->getMimeType();
@@ -103,7 +102,7 @@ class SliderController extends Controller
          // Handle the file upload
         if ($request->hasFile('slider_file')) {
             $file = $request->file('slider_file');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $fileName = time() . '_' . $file->getClientOriginalName();
             
             // Determine the file type
             $fileType = $file->getMimeType();

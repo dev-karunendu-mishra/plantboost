@@ -1,4 +1,4 @@
-@if(count($images) > 0)
+@if(!empty($images) && count($images) > 0)
 <div class="product-view-box text-center">
     <!-- Main Image -->
     <img id="mainProductImage" src="{{asset('storage/'.$images[0]->path)}}" class="main-image mb-3" alt="Product Image">
