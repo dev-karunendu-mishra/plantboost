@@ -101,30 +101,28 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            // 'category_id' => 'required|exists:categories,id',
-            // 'brand_id' => 'required|exists:brands,id',
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            // 'tags' => 'array|exists:tags,id',
+            'old_price' => 'required|numeric',
+            'offer' => 'required|numeric',
+            'reviews' => 'required|numeric',
+            'rating' => 'required|numeric',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'seo_title' => 'required|string',
+            'seo_keywords' => 'required|string',
+            'seo_description' => 'required|string',
         ]);
 
-        $product = Product::create($request->all());
-        $filePath=null;
+        $product = Product::create($validatedData);
+        // Handle file uploads if provided
         if ($request->hasFile('image')) {
-            // Handle file uploads
-            foreach ($request->file('image') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/products', $fileName, 'uploads'); // 'uploads' is the storage folder
-                // Save file path to the database
-                $product->images()->create([
-                    'path' => $filePath,
-                ]);
-            }
+            // Upload multiple files and get the file data
+            $fileData = $this->uploadMultipleFiles($request, 'image', 'uploads/products');
+            // Save each file path to the database in one go
+            $product->images()->createMany($fileData);
         }
-
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
@@ -149,29 +147,35 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([
-            // 'category_id' => 'required|exists:categories,id',
-            // 'brand_id' => 'required|exists:brands,id',
-            'name' => 'required|string|max:255',
+        // Validate only the fields that are present in the request
+        $validatedData = $request->validate([
+            'name' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric',
-            // 'tags' => 'array|exists:tags,id',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'price' => 'nullable|numeric',
+            'old_price' => 'nullable|numeric',
+            'offer' => 'nullable|numeric',
+            'reviews' => 'nullable|numeric',
+            'rating' => 'nullable|numeric',
+            'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'seo_title' => 'nullable|string',
+            'seo_keywords' => 'nullable|string',
+            'seo_description' => 'nullable|string',
         ]);
 
-        $product->update($request->all());
+    
+        // Update product fields
+        $product->update($validatedData);
 
+        // Handle file uploads if provided
         if ($request->hasFile('image')) {
-            // Handle file uploads
-            foreach ($request->file('image') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/products', $fileName, 'uploads'); // 'uploads' is the storage folder
-                // Save file path to the database
-                $product->images()->create([
-                    'path' => $filePath,
-                ]);
-            }
+            // Upload multiple files and get the file data
+            $fileData = $this->uploadMultipleFiles($request, 'image', 'uploads/products');
+            // Save each file path to the database in one go
+            $product->images()->createMany($fileData);
+            // Remove old files associated with the product
+            $this->removeOldFiles($product, 'images', 'uploads');
         }
+
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
 
@@ -180,15 +184,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Delete associated images
-        foreach ($product->images as $image) {
-            // Assuming images are stored in public disk
-            if (Storage::disk('uploads')->exists($image->path)) {
-                Storage::disk('uploads')->delete($image->path);
-            }
-            // Optionally, delete the image record from the database
-            $image->delete();
-        }
+        $this->removeOldFiles($product, 'images', 'uploads');
         $product->delete();
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }
@@ -205,7 +201,6 @@ class ProductController extends Controller
         
         // Delete the image record from the database
         $image->delete();
-
         return redirect()->back()->with('success', 'Image deleted successfully.');
     }
 }

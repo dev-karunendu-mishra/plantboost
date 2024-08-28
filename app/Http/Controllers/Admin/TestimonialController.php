@@ -34,13 +34,13 @@ class TestimonialController extends Controller
             "label" => "Description",
             "placeholder" => "Description"
         ],
-        "profile" => [
-            "id" => "image",
-            "name" => "profile",
-            "type" => "file",
-            "label" => "Profile",
-            "placeholder" => "Profile"
-        ],
+        // "profile" => [
+        //     "id" => "image",
+        //     "name" => "profile",
+        //     "type" => "file",
+        //     "label" => "Profile",
+        //     "placeholder" => "Profile"
+        // ],
         "image" => [
             "id" => "image",
             "name" => "image[]",
@@ -49,7 +49,6 @@ class TestimonialController extends Controller
             "placeholder" => "Testimonial Media"
         ]
     ];
-
 
 
     /**
@@ -61,56 +60,29 @@ class TestimonialController extends Controller
         return view($this->indexView, ['columns' => $this->columns, 'fields' => $this->fields, 'edit' => false, 'testimonials' => $testimonials, 'model' => null]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480',
             'image.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480',
         ]);
 
-        // Handle file upload
-        $profile = null;
-        if ($request->hasFile('profile')) {
-            $file = $request->file('profile');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $profile = $file->storeAs('uploads/testimonials/profile', $fileName, 'uploads'); // 'uploads' is the storage folder
-        }
 
-        $testimonial = Testimonial::create(["name" => $request->name, "description" => $request->description, "profile" => $profile]);
+        $testimonial = Testimonial::create($validatedData);
         if ($request->hasFile('image')) {
-            // Handle file uploads
-            foreach ($request->file('image') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/testimonials', $fileName, 'uploads'); // 'uploads' is the storage folder
-                // Save file path to the database
-                $testimonial->images()->create([
-                    'path' => $filePath,
-                ]);
-            }
+            // Upload multiple files and get the file data
+            $fileData = $this->uploadMultipleFiles($request, 'image', 'uploads/testimonials');
+            // Save each file path to the database in one go
+            $testimonial->images()->createMany($fileData);
         }
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Testimonial $testimonial)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -128,28 +100,20 @@ class TestimonialController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20480',
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20480',
         ]);
 
-        // Handle file upload
-        $profile = null;
-        if ($request->hasFile('profile')) {
-            $file = $request->file('profile');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $profile = $file->storeAs('uploads/testimonials/profile', $fileName, 'uploads'); // 'uploads' is the storage folder
-        }
-        $testimonial->update(["name" => $request->name, "description" => $request->description, "profile" => $profile ? $profile : $testimonial->profile]);
+        // Update product fields
+        $testimonial->update($validatedData);
 
+        // Handle file uploads if provided
         if ($request->hasFile('image')) {
-            foreach ($request->file('image') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/testimonials', $fileName, 'uploads'); // 'uploads' is the storage folder
-                // Save file path to the database
-                $testimonial->images()->create([
-                    'path' => $filePath,
-                ]);
-            }
+            // Upload multiple files and get the file data
+            $fileData = $this->uploadMultipleFiles($request, 'image', 'uploads/testimonials');
+            // Save each file path to the database in one go
+            $testimonial->images()->createMany($fileData);
+            // Remove old files associated with the product
+            $this->removeOldFiles($testimonial, 'images', 'uploads');
         }
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
@@ -159,16 +123,7 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-        // Delete associated images
-        foreach ($testimonial->images as $image) {
-            // Assuming images are stored in public disk
-            if (Storage::disk('public')->exists($image->path)) {
-                Storage::disk('public')->delete($image->path);
-            }
-            // Optionally, delete the image record from the database
-            $image->delete();
-        }
-        $testimonial->delete();
+        $this->removeOldFiles($testimonial, 'images', 'uploads');
         $testimonial->delete();
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }

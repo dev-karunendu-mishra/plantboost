@@ -45,13 +45,6 @@ class SliderController extends Controller
         return view($this->indexView,['columns'=>$this->columns,'fields'=>$this->fields,'edit'=>false,'records'=>$records,'model'=>null]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -87,13 +80,6 @@ class SliderController extends Controller
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Slider $slider)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
