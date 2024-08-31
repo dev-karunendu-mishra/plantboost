@@ -1,4 +1,4 @@
-<x-default-app-layout>
+<x-default-app-layout :siteSettings="$siteData">
     <div class="container">
         <div class="slider">
             <img src="https://crazycrafti.shop/cdn/shop/files/You_also_have_back_pain_due_to_weight_gain._600x.jpg?v=1723026073"
@@ -47,7 +47,7 @@
                 healthy,
                 thriving garden.</p>
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/Gif_01_1.gif?v=1723019168" width="479"
+                    src="/assets/img/Gif_01_1.gif?v=1723019168" width="479"
                     height="479"></p>
             <p><br></p>
             <p>Unlike synthetic fertilizers, Plant Boost is eco-friendly and sustainable, making it the perfect choice
@@ -56,14 +56,14 @@
                 applied
                 directly to your plants, making it suitable for both novice and experienced gardeners alike.</p>
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/57.jpg?v=1722661992" width="485"
+                    src="/assets/img/57.jpg?v=1722661992" width="485"
                     height="485"></p>
             <p>Experience the joy of gardening with Plant Boost as it transforms your garden into a thriving paradise.
                 Our
                 formula not only boosts plant growth but also improves soil aeration, enhances nutrient absorption, and
                 increases water retention, reducing the need for frequent watering.</p>
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/Gif_02_1.gif?v=1723019168" width="492"
+                    src="/assets/img/Gif_02_1.gif?v=1723019168" width="492"
                     height="492"></p>
             <h3><strong>Key Features and Benefits</strong></h3>
             <ol>
@@ -79,10 +79,10 @@
                 <li>🌸 <strong>Year-Round Care</strong>: Effective in all seasons.</li>
             </ol>
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/51_06c7a714-a409-43fa-bbba-cd890e3fe432.jpg?v=1722662152"
+                    src="/assets/img/51_06c7a714-a409-43fa-bbba-cd890e3fe432.jpg?v=1722662152"
                     width="489" height="489"></p>
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/Gif_03_1.gif?v=1723019170" width="488"
+                    src="/assets/img/Gif_03_1.gif?v=1723019170" width="488"
                     height="488"></p>
             <p><strong>Why Choose Plant Boost?</strong></p>
             <ul>
@@ -100,7 +100,7 @@
             </div>
 
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/60.jpg?v=1722661992" width="466"
+                    src="/assets/img/60.jpg?v=1722661992" width="466"
                     height="466"></p>
             <p><strong>How to Use Plant Boost:</strong></p>
             <ol>
@@ -110,7 +110,7 @@
                 <li>Watch your garden thrive!</li>
             </ol>
             <p><img alt="" class="img-fluid"
-                    src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/55.jpg?v=1722661992" width="473"
+                    src="/assets/img/55.jpg?v=1722661992" width="473"
                     height="473"></p>
             <h3><strong>FAQs</strong></h3>
             <p><strong>Q1: Is Plant Boost safe for all types of plants?</strong> Yes, Plant Boost is 100% organic and
@@ -169,9 +169,9 @@
         </div>
 
         <div class="slider-two pt-5">
-            <img src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/Gif_01_1.gif?v=1723019168" alt="" />
-            <img src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/Gif_02_1.gif?v=1723019168" alt="" />
-            <img src="https://cdn.shopify.com/s/files/1/0877/9828/4604/files/Gif_03_1.gif?v=1723019170" alt="" />
+            <img src="/assets/img/Gif_01_1.gif?v=1723019168" alt="" />
+            <img src="/assets/img/Gif_02_1.gif?v=1723019168" alt="" />
+            <img src="/assets/img/Gif_03_1.gif?v=1723019170" alt="" />
         </div>
 
     </div>

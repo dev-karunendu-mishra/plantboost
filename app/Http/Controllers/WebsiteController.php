@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Order;
+use Illuminate\Support\Str;
 
 
 class WebsiteController extends Controller
@@ -18,7 +19,35 @@ class WebsiteController extends Controller
         // Store it in the session
         $request->session()->put('ad_url', $fullUrl);
         $products = Product::first();
-        return view('default.home-new', compact('products'));
+        if ($products) {
+            $seo = [
+                'title' => $products->seo_title ?: $products->name,
+                'description' => $products->seo_description ?: Str::limit($products->seo_description, 160),
+                'keywords' => $products->seo_keywords ?: 'default, keywords',
+            ];
+            return view('default.home-new', compact('products', 'seo'));
+        } else {
+            return view('default.error'); // Adjust 'index' to your specific route name
+        }
+    }
+
+    public function getProduct(Request $request, $productURL)
+    {
+        // Get the full URL with query parameters
+        $fullUrl = $request->fullUrl();
+        // Store it in the session
+        $request->session()->put('ad_url', $fullUrl);
+        $products = Product::where('product_url', $productURL)->with(['images'])->first();
+        if ($products) {
+            $seo = [
+                'title' => $products->seo_title ?: $products->name,
+                'description' => $products->seo_description ?: Str::limit($products->description, 160),
+                'keywords' => $products->seo_keywords ?: 'default, keywords',
+            ];
+            return view('default.home-new', compact('products', 'seo'));
+        } else {
+            return view('default.error'); // Adjust 'index' to your specific route name
+        }
     }
 
     public function placeOrder(Request $request)

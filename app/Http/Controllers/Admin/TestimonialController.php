@@ -108,12 +108,13 @@ class TestimonialController extends Controller
 
         // Handle file uploads if provided
         if ($request->hasFile('image')) {
+            // Remove old files associated with the product
+            $this->removeOldFiles($testimonial, 'images', 'uploads');
             // Upload multiple files and get the file data
             $fileData = $this->uploadMultipleFiles($request, 'image', 'uploads/testimonials');
             // Save each file path to the database in one go
             $testimonial->images()->createMany($fileData);
-            // Remove old files associated with the product
-            $this->removeOldFiles($testimonial, 'images', 'uploads');
+            
         }
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }

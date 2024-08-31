@@ -20,7 +20,13 @@
             <td><a href="mailto:{{$record->$key}}">{{$record->$key}}</a></td>
             @break
             @case('images')
-            <td><img src="{{asset('storage/' . $record->$key[0]->path)}}" class="img-thumbnail" alt="{{$record->$key[0]->path}}" height="75" width="75"/></td>
+            <td>
+                @if(!empty($record->$key) && count($record->$key)  > 0)
+                <img src="{{asset('storage/' . $record->$key[0]->path)}}" class="img-thumbnail" alt="{{$record->$key[0]->path}}" height="75" width="75"/>
+                @else
+                 <img src="https://via.placeholder.com/75x75" class="img-fluid" alt=""/>
+                @endif
+            </td>
             @break
             @case('file_path')
             <td><img src="{{asset('storage/' . $record->$key)}}" class="img-thumbnail" alt="{{$record->$key}}" height="75" width="75"/></td>
@@ -30,6 +36,14 @@
             @break
             @case('parent')
             <td>{{!empty($record->$key) ? $record->$key->name : 'NA'}}</td>
+            @break
+            @case('product_url')
+            @if(!empty($record->$key))
+            <td><a href="{{url($record->$key)}}" target="_blank">{{$record->$key}}</a></td>
+            @else
+            <td>NA</td>
+            @endif
+            
             @break
             @case('category_id')
             <td>{{!empty($record->category) ? $record->category->name : 'NA'}}</td>

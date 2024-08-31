@@ -18,7 +18,7 @@ class ProductController extends Controller
     private $createMessage = 'Product created successfully.';
     private $updateMessage = 'Product updated successfully.';
 
-    private $columns = ["id"=>"ID", "name"=>"Name", "images"=>"Image", "price"=>"Price", "created_at"=>"Created At"];
+    private $columns = ["id"=>"ID", "name"=>"Name", "images"=>"Image", 'product_url'=>'URL', "price"=>"Price", "created_at"=>"Created At"];
 
     private $fields = [
         "name"=>[
@@ -70,6 +70,13 @@ class ProductController extends Controller
             "label"=>"Product's Rating",
             "placeholder"=>"Product's Rating"
         ],
+        "product_url"=>[
+            "id"=>"product_url",
+            "name"=>"product_url",
+            "type"=>"text",
+            "label"=>"Product's URL",
+            "placeholder"=>"Product's URL"
+        ],
         "image"=>[
             "id"=>"productImage",
             "name"=>"image[]",
@@ -83,9 +90,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $records = Product::with(['images'])->first();
-        $edit = !empty($records);
-        return view($this->indexView,['columns'=>$this->columns,'fields'=>$this->fields,'edit'=>$edit,'records'=>$records,'model'=>$records]);
+        $records = Product::with(['images'])->get();
+        return view($this->indexView,['columns'=>$this->columns,'fields'=>$this->fields,'edit'=>false,'records'=>$records,'model'=>null]);
     }
 
     /**
@@ -109,6 +115,7 @@ class ProductController extends Controller
             'offer' => 'required|numeric',
             'reviews' => 'required|numeric',
             'rating' => 'required|numeric',
+            'product_url' => 'required|string',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'seo_title' => 'nullable|string',
             'seo_keywords' => 'nullable|string',
@@ -156,6 +163,7 @@ class ProductController extends Controller
             'offer' => 'nullable|numeric',
             'reviews' => 'nullable|numeric',
             'rating' => 'nullable|numeric',
+            'product_url' => 'nullable|string',
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'seo_title' => 'nullable|string',
             'seo_keywords' => 'nullable|string',
@@ -168,12 +176,12 @@ class ProductController extends Controller
 
         // Handle file uploads if provided
         if ($request->hasFile('image')) {
+            // Remove old files associated with the product
+            $this->removeOldFiles($product, 'images', 'uploads');
             // Upload multiple files and get the file data
             $fileData = $this->uploadMultipleFiles($request, 'image', 'uploads/products');
             // Save each file path to the database in one go
             $product->images()->createMany($fileData);
-            // Remove old files associated with the product
-            $this->removeOldFiles($product, 'images', 'uploads');
         }
 
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);

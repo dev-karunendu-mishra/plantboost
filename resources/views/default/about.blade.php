@@ -1,4 +1,4 @@
-<x-default-app-layout>
+<x-default-app-layout :siteSettings="$siteData">
     <div class="container">
         <h1 class="text-center">About Us</h1>
 

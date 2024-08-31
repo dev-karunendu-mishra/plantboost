@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\DeliveryOptionController;
+use App\Http\Controllers\Admin\ImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -109,6 +110,17 @@ Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function
             'update' => 'delivery-options.update',
             'destroy' => 'delivery-options.destroy'
         ]);
+
+        Route::resource('images', ImageController::class)->names([
+            'index' => 'images',
+            'create' => 'images.create',
+            'store' => 'images.store',
+            'show' => 'images.show',
+            'edit' => 'images.edit',
+            'update' => 'images.update',
+            'destroy' => 'images.destroy'
+        ]);
+
     });
     
    

@@ -5,7 +5,7 @@ use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\EnquiryController;
 use Illuminate\Support\Facades\Route;
 
-require __DIR__.'/auth.php';
+
 require __DIR__.'/admin-auth.php';
 
 // Route::get('/', function () {
@@ -62,6 +62,7 @@ Route::prefix('/')->group(function(){
         return "Symlink created successfully!";
     });
     Route::get('', [WebsiteController::class,'index'])->name('index');
+    Route::get('{productURL}',[WebsiteController::class, 'getProduct']);
     Route::get('refund-policy', function () {
         return view('default.refund-policy');
     });
@@ -96,4 +97,5 @@ Route::prefix('/')->group(function(){
 
         return view('default.thankyou', compact('order', 'product'));
     })->name('thankyou');
+   
 });

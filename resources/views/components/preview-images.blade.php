@@ -11,8 +11,20 @@
         </button>
         <div class="thumbnails-wrapper">
             @foreach($images as $image)
-            <img src="{{asset('storage/'.$image->path)}}" class="img-fluid" onclick="changeImage(this)"
-                alt="{{asset('storage/'.$image->path)}}" />
+            <div class="thumbnail-item">
+                <img src="{{asset('storage/'.$image->path)}}" class="img-fluid" onclick="changeImage(this)"
+                    alt="{{asset('storage/'.$image->path)}}">
+
+                <!-- Delete Button -->
+                <form action="{{ route('admin.images.destroy', $image->id) }}" method="POST"
+                    onsubmit="return confirm('Are you sure you want to delete this image?');" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <!-- <button type="submit" class="delete-btn" title="Delete Image">×</button> -->
+                    <button type="submit" class="delete-btn" onclick="deleteThumbnail(this)"><i
+                            class="fa fa-trash"></i></button>
+                </form>
+            </div>
             @endforeach
         </div>
         <!-- <button class="arrow-btn right" onclick="scrollRight()">&gt;</button> -->
@@ -29,30 +41,56 @@
 
     <!-- Thumbnails Slider with Arrows -->
     <div class="thumbnails-container">
-        <button class="carousel-control-prev arrow-btn left" type="button" onclick="scrollLeft()" data-bs-slide="prev">
+        <button class="carousel-control-prev arrow-btn left" type="button" onclick="scrollLeftSide()"
+            data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <div class="thumbnails-wrapper">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 1">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 2">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 3">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 4">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 5">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 6">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 7">
-            <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                alt="Thumbnail 8">
+            <!-- Thumbnail Item -->
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 1">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <!-- Repeat for more thumbnails -->
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 2">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 3">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+            </div>
         </div>
-        <!-- <button class="arrow-btn right" onclick="scrollRight()">&gt;</button> -->
-        <button class="carousel-control-next arrow-btn right" type="button" onclick="scrollRight()"
+        <button class="carousel-control-next arrow-btn right" type="button" onclick="scrollRightSide()"
             data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>

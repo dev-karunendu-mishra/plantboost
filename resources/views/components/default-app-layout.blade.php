@@ -5,7 +5,16 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if(!empty($siteSettings) && !empty($siteSettings->icon))
+    <link rel="icon" href="{{asset('storage/'.$siteSettings->icon)}}" />
+    @else
     <link rel="icon" href="{{url('assets/img/logo.png')}}" />
+    @endif
+
+    <title>{{ $seo['title'] ?? 'Organic Plant Boost (PACK OF 3)' }}</title>
+    <meta name="description" content="{{ $seo['description'] ?? 'Organic Plant Boost' }}"/>
+    <meta name="keywords" content="{{ $seo['keywords'] ?? 'Organic Plant Boost' }}"/>
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         referrerpolicy="no-referrer" />
@@ -20,7 +29,7 @@
 
     <link href="assets/css/app.css" rel="stylesheet">
 
-    <title>Organic Plant Boost (PACK OF 3)</title>
+    
 
     <!-- <script type="text/javascript">
         var tWidth='100%';                  // width (in pixels)

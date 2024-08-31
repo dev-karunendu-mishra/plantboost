@@ -17,80 +17,9 @@
   <!-- Include stylesheet -->
   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet" />
+  <link href="/assets/css/image_preview.css" rel="stylesheet" />
   <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css"> -->
   <script src="{{url('/template-resources/admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
-
-  <style>
-    .product-view-box {
-      padding: 20px;
-      border-radius: 10px;
-      /* border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            background-color: #fff; */
-    }
-
-    .main-image {
-      width: 100%;
-      max-height: 450px;
-      object-fit: cover;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-    }
-
-    .thumbnails-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-top: 15px;
-    }
-
-    .thumbnails-wrapper {
-      display: flex;
-      overflow: hidden;
-      flex-wrap: nowrap;
-      scroll-behavior: smooth;
-    }
-
-    .thumbnails-wrapper img {
-      cursor: pointer;
-      border: 3px solid transparent;
-      border-radius: 10px;
-      margin-right: 10px;
-      object-fit: cover;
-      width: 100px;
-      transition: border-color 0.3s ease;
-    }
-
-    .thumbnails-wrapper img:hover,
-    .thumbnails-wrapper img.active {
-      border-color: #007bff;
-    }
-
-    .arrow-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      z-index: 1;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-    }
-
-    .arrow-btn.left {
-      left: -20px;
-    }
-
-    .arrow-btn.right {
-      right: -20px;
-    }
-  </style>
 
 
 </head>
@@ -126,6 +55,10 @@
   <script src="{{url('/template-resources/admin/assets/js/app.min.js')}}"></script>
   <script src="{{url('/template-resources/admin/assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
   <script src="{{url('/template-resources/admin/assets/libs/simplebar/dist/simplebar.js')}}"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg">
   <!-- Latest compiled and minified JavaScript -->
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/js/jasny-bootstrap.min.js"></script> -->
   <!-- Include the Quill library -->

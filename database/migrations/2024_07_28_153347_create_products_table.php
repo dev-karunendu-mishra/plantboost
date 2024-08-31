@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('offer', 10, 2)->nullable();
             $table->decimal('reviews', 10, 2)->nullable();
             $table->decimal('rating', 10, 2)->nullable();
+            $table->string('product_url');
             $table->string('seo_title')->nullable();
             $table->string('seo_keywords')->nullable();
             $table->string('seo_description')->nullable();
