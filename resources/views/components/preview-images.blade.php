@@ -51,18 +51,28 @@
             <div class="thumbnail-item">
                 <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
                     alt="Thumbnail 1">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
             </div>
             <!-- Repeat for more thumbnails -->
             <div class="thumbnail-item">
                 <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
                     alt="Thumbnail 2">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
             </div>
             <div class="thumbnail-item">
                 <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
                     alt="Thumbnail 3">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
+            </div>
+            <div class="thumbnail-item">
+                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
+                    alt="Thumbnail 4">
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
             </div>
             <div class="thumbnail-item">
                 <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
@@ -72,22 +82,12 @@
             <div class="thumbnail-item">
                 <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
                     alt="Thumbnail 4">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
             </div>
             <div class="thumbnail-item">
                 <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
                     alt="Thumbnail 4">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
-            </div>
-            <div class="thumbnail-item">
-                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                    alt="Thumbnail 4">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
-            </div>
-            <div class="thumbnail-item">
-                <img src="https://via.placeholder.com/100x100" class="img-fluid" onclick="changeImage(this)"
-                    alt="Thumbnail 4">
-                <button class="delete-btn" onclick="deleteThumbnail(this)">×</button>
+                <button type="submit" class="delete-btn"><i class="fa fa-trash"></i></button>
             </div>
         </div>
         <button class="carousel-control-next arrow-btn right" type="button" onclick="scrollRightSide()"

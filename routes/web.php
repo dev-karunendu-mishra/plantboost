@@ -2,10 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WebsiteController;
-use App\Http\Controllers\EnquiryController;
 use Illuminate\Support\Facades\Route;
 
-
+require __DIR__.'/auth.php';
 require __DIR__.'/admin-auth.php';
 
 // Route::get('/', function () {
@@ -22,23 +21,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('/')->group(function(){
-    Route::get('link', function(){
+Route::prefix('/')->group(function () {
+    Route::get('link', function () {
         Artisan::call('storage:link');
-        $target = $_SERVER['DOCUMENT_ROOT'] . '/storage/uploads';
-        $link = $_SERVER['DOCUMENT_ROOT'] . '/public/storage/uploads';
+        $target = $_SERVER['DOCUMENT_ROOT'].'/storage/uploads';
+        $link = $_SERVER['DOCUMENT_ROOT'].'/public/storage/uploads';
         // Check if the symlink or directory already exists
         // Check if the symlink or directory already exists
         // Function to recursively delete a directory and its contents
-        function deleteDirectory($dir) {
-            if (!is_dir($dir)) {
+        function deleteDirectory($dir)
+        {
+            if (! is_dir($dir)) {
                 return false;
             }
 
-            $items = array_diff(scandir($dir), array('.', '..'));
+            $items = array_diff(scandir($dir), ['.', '..']);
 
             foreach ($items as $item) {
-                $path = $dir . DIRECTORY_SEPARATOR . $item;
+                $path = $dir.DIRECTORY_SEPARATOR.$item;
                 if (is_dir($path)) {
                     deleteDirectory($path);
                 } else {
@@ -59,10 +59,11 @@ Route::prefix('/')->group(function(){
         }
         // Create the new symlink
         symlink($target, $link);
-        return "Symlink created successfully!";
+
+        return 'Symlink created successfully!';
     });
-    Route::get('', [WebsiteController::class,'index'])->name('index');
-    Route::get('{productURL}',[WebsiteController::class, 'getProduct']);
+    Route::get('', [WebsiteController::class, 'index'])->name('index');
+
     Route::get('refund-policy', function () {
         return view('default.refund-policy');
     });
@@ -84,18 +85,19 @@ Route::prefix('/')->group(function(){
     Route::get('faqs', function () {
         return view('default.faq');
     });
-    Route::post('placeOrder', [WebsiteController::class,'placeOrder'])->name('placeOrder');
+    Route::post('placeOrder', [WebsiteController::class, 'placeOrder'])->name('placeOrder');
     Route::get('thankyou', function () {
-       // Retrieve order and product data from session
+        // Retrieve order and product data from session
         $order = session('order');
         $product = session('product');
 
         // Ensure that the session variables are available
-        if (!$order || !$product) {
+        if (! $order || ! $product) {
             return redirect('/'); // Redirect to homepage or another page if data isn't found
         }
 
         return view('default.thankyou', compact('order', 'product'));
     })->name('thankyou');
-   
+    Route::get('placeShipmentOrder', [WebsiteController::class, 'placeShipmentOrder']);
+    Route::get('{productURL}', [WebsiteController::class, 'getProduct']);
 });

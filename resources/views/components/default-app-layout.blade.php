@@ -12,24 +12,20 @@
     @endif
 
     <title>{{ $seo['title'] ?? 'Organic Plant Boost (PACK OF 3)' }}</title>
-    <meta name="description" content="{{ $seo['description'] ?? 'Organic Plant Boost' }}"/>
-    <meta name="keywords" content="{{ $seo['keywords'] ?? 'Organic Plant Boost' }}"/>
+    <meta name="description" content="{{ $seo['description'] ?? 'Organic Plant Boost' }}" />
+    <meta name="keywords" content="{{ $seo['keywords'] ?? 'Organic Plant Boost' }}" />
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         referrerpolicy="no-referrer" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/slick.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css" />
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
 
     <link href="assets/css/app.css" rel="stylesheet">
 
-    
+
 
     <!-- <script type="text/javascript">
         var tWidth='100%';                  // width (in pixels)
@@ -106,32 +102,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.slider').slick({
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2000,
-            });
-            $('.slider-two').slick({
-                dots: true,
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 1500,
-            });
-            $('.review-slider').slick({
-                dots: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                autoplay: true,
-                autoplaySpeed: 2000,
-            });
-        });
-    </script>
     @stack('scripts')
 </body>
 

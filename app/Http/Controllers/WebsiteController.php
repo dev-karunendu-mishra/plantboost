@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Order;
+use App\Models\Product;
+use App\Services\NimbuspostService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
 
 class WebsiteController extends Controller
 {
@@ -15,7 +14,7 @@ class WebsiteController extends Controller
     {
         // Get the full URL with query parameters
         $fullUrl = $request->fullUrl();
-        
+
         // Store it in the session
         $request->session()->put('ad_url', $fullUrl);
         $products = Product::first();
@@ -25,6 +24,7 @@ class WebsiteController extends Controller
                 'description' => $products->seo_description ?: Str::limit($products->seo_description, 160),
                 'keywords' => $products->seo_keywords ?: 'default, keywords',
             ];
+
             return view('default.home-new', compact('products', 'seo'));
         } else {
             return view('default.error'); // Adjust 'index' to your specific route name
@@ -44,6 +44,7 @@ class WebsiteController extends Controller
                 'description' => $products->seo_description ?: Str::limit($products->description, 160),
                 'keywords' => $products->seo_keywords ?: 'default, keywords',
             ];
+
             return view('default.home-new', compact('products', 'seo'));
         } else {
             return view('default.error'); // Adjust 'index' to your specific route name
@@ -81,13 +82,20 @@ class WebsiteController extends Controller
         // Fetch the related product details
         $product = Product::find($validatedData['product_id']);
 
-        // Flash success message
+        NimbuspostService::createShipment($order, $product);
+
+        //Flash success message
         $request->session()->flash('status', 'Your order has been placed successfully!');
 
         // Redirect to the thank you page with the order and product details
         return redirect()->route('thankyou')->with([
             'order' => $order,
-            'product' => $product
+            'product' => $product,
         ]);
+    }
+
+    public function placeShipmentOrder(Request $request)
+    {
+        return NimbuspostService::createShipment((object) ['order_id' => 'PLB1001', 'name' => 'Karunendu Mishra', 'address_line_one' => 'Street No 9, Green Valley Colony (Shahapurpur), Pipalgaon Near IIIT Jhalwa', 'address_line_two' => 'Kabir Nagar', 'pin' => '211011', 'city' => 'Allahabad', 'state' => 'Uttar Pradesh', 'mobile' => '8808527577'], (object) ['name' => 'Plant Boost', 'price' => 399]);
     }
 }
