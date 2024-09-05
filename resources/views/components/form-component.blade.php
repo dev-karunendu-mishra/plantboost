@@ -44,7 +44,7 @@
             @case('select')
             <select id="{{$field['id']}}" name="{{$field['name']}}"
                 class="form-select @error($field['name']) is-invalid @enderror" aria-label="{{$field['name']}}">
-                <option value="{{null}}">{{$field['placeholder']}}</option>
+                <option value="{{null}}" disabled>{{$field['placeholder']}}</option>
                 @foreach($field['options'] as $option)
                 @if(!empty($model) && $model->id === $option->id)
                 <option selected value="{{$option->id}}">{{$option->name}}</option>

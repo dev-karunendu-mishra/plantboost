@@ -78,7 +78,7 @@ class NimbuspostService
             ];
             $responseData = Http::withToken($token)->post('https://api.nimbuspost.com/v1/shipments', $shipmentData);
             // Check if the response is successful
-            \Log::info('Test log entry'.$responseData);
+            \Log::info('Order :: '.$order.'Shipment Response :: '.$responseData);
             if ($responseData['status']) {
                 $shipmentData = $responseData['data'];
 

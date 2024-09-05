@@ -2,49 +2,64 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Slider;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
-
     private $indexView = 'admin.sliders.all';
+
     private $storeRoute = 'admin.sliders';
+
     private $editView = 'admin.sliders.edit';
+
     private $deleteRoute = 'admin.sliders';
+
     private $deleteMessage = 'Slider deleted successfully.';
+
     private $createMessage = 'Slider created successfully.';
+
     private $updateMessage = 'Slider updated successfully.';
 
-    public $columns = ["id"=>"ID", "title"=>"Title", "file_path"=>"Slider", "created_at"=>"Created At"];
+    public $columns = ['id' => 'ID', 'title' => 'Title', 'file_path' => 'Slider', 'created_at' => 'Created At'];
 
     public $fields = [
-        "title"=>[
-            "id"=>"title",
-            "name"=>"title",
-            "type"=>"text",
-            "label"=>"Slider's Title",
-            "placeholder"=>"Slider's Title"
+        'title' => [
+            'id' => 'title',
+            'name' => 'title',
+            'type' => 'text',
+            'label' => "Slider's Title",
+            'placeholder' => "Slider's Title",
         ],
-        
-        "slider_file"=>[
-            "id"=>"slider_file",
-            "name"=>"slider_file",
-            "type"=>"file",
-            "label"=>"Slider File",
-            "placeholder"=>"Slider File"
-        ]
+        'product_id' => [
+            'id' => 'product',
+            'name' => 'product_id',
+            'type' => 'select',
+            'label' => "Product's ID",
+            'placeholder' => "Product's ID",
+        ],
+        'slider_file' => [
+            'id' => 'slider_file',
+            'name' => 'slider_file',
+            'type' => 'file',
+            'label' => 'Slider File',
+            'placeholder' => 'Slider File',
+        ],
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $records = Slider::all();
-        return view($this->indexView,['columns'=>$this->columns,'fields'=>$this->fields,'edit'=>false,'records'=>$records,'model'=>null]);
-    }
+        $products = Product::all();
+        $this->fields['product_id']['options'] = $products;
 
+        return view($this->indexView, ['columns' => $this->columns, 'fields' => $this->fields, 'edit' => false, 'records' => $records, 'model' => null]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -53,6 +68,7 @@ class SliderController extends Controller
     {
         // Validate the request
         $request->validate([
+            'product_id' => 'required|exists:products,id',
             'title' => 'nullable|string|max:255',
             'slider_file' => 'required|file|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi|max:10240', // 10MB max size
         ]);
@@ -60,8 +76,8 @@ class SliderController extends Controller
         // Handle the file upload
         if ($request->hasFile('slider_file')) {
             $file = $request->file('slider_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            
+            $fileName = time().'_'.$file->getClientOriginalName();
+
             // Determine the file type
             $fileType = $file->getMimeType();
             $type = strpos($fileType, 'image') !== false ? 'image' : 'video';
@@ -71,21 +87,25 @@ class SliderController extends Controller
 
             // Create a slider record
             Slider::create([
+                'product_id' => $request->input('product_id'),
                 'title' => $request->input('title'),
                 'file_path' => $filePath,
                 'file_type' => $type,
             ]);
         }
+
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Slider $slider)
     {
-        return view($this->editView,['columns'=>$this->columns,'fields'=>$this->fields, 'model'=>$slider, 'edit'=>true]);
+        $products = Product::all();
+        $this->fields['product_id']['options'] = $products;
+
+        return view($this->editView, ['columns' => $this->columns, 'fields' => $this->fields, 'model' => $slider, 'edit' => true]);
     }
 
     /**
@@ -99,11 +119,11 @@ class SliderController extends Controller
             'slider_file' => 'required|file|mimes:jpeg,jpg,png,gif,webp,mp4,mov,avi|max:10240', // 10MB max size
         ]);
 
-         // Handle the file upload
+        // Handle the file upload
         if ($request->hasFile('slider_file')) {
             $file = $request->file('slider_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            
+            $fileName = time().'_'.$file->getClientOriginalName();
+
             // Determine the file type
             $fileType = $file->getMimeType();
             $type = strpos($fileType, 'image') !== false ? 'image' : 'video';
@@ -118,6 +138,7 @@ class SliderController extends Controller
                 'file_type' => $type,
             ]);
         }
+
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
 
@@ -127,6 +148,7 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         $slider->delete();
+
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }
 }

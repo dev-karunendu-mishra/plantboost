@@ -80,7 +80,7 @@
 </head>
 
 <body>
-    @if (Route::is('index'))
+    @if (Route::is('index') || Route::is('product'))
     {{-- Your component goes here --}}
     <marquee class="h5 fw-bold text-white position-relative mb-0 py-2" behavior="scrolling" direction="left"
         style="max-width: 500px;left: 50%;transform: translateX(-50%);background-color: #60bb2a;">

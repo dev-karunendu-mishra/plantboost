@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('title')->nullable();
             $table->string('file_path');
             $table->enum('file_type', ['image', 'video']);

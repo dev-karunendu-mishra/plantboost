@@ -8,11 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name', 'description', 'price', 'old_price', 'offer', 'reviews', 'rating', 'product_url', 'seo_title', 'seo_keywords', 'seo_description'];
 
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+
     }
 
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
+    }
+
+    public function sliders()
+    {
+        return $this->hasMany(Slider::class);
+    }
 }

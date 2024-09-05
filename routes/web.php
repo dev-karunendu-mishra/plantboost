@@ -99,5 +99,5 @@ Route::prefix('/')->group(function () {
         return view('default.thankyou', compact('order', 'product'));
     })->name('thankyou');
     Route::get('placeShipmentOrder', [WebsiteController::class, 'placeShipmentOrder']);
-    Route::get('{productURL}', [WebsiteController::class, 'getProduct']);
+    Route::get('{productURL}', [WebsiteController::class, 'getProduct'])->name('product');
 });

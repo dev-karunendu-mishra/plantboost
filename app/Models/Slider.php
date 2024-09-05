@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'file_path', 'file_type'];
+
+    protected $fillable = ['product_id', 'title', 'file_path', 'file_type'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

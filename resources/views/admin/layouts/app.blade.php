@@ -111,8 +111,13 @@
       theme_advanced_resizing: true,
 
       //Open Manager Options
+       images_upload_url: '/storage/uploads',
+    file_picker_types: 'image',
+    image_uploadtab: true,
+    image_title: true,
+    automatic_uploads: true,
       file_browser_callback: "openmanager",
-      open_manager_upload_path: '../../../../uploads/',
+      open_manager_upload_path: '/storage/uploads',
 
       // Example content CSS (should be your site CSS)
       content_css: "css/content.css",

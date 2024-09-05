@@ -160,8 +160,9 @@
         @endif
 
         @include('default.components.wave-notification')
-        @include('default.components.slider')
-        @include('default.components.testimonial-slider')
+
+        <x-slider :sliders="$products->sliders"/>
+        <x-testimonial :testimonials="$products->testimonials"/>
     </div>
 
     @include('default.components.order-form')

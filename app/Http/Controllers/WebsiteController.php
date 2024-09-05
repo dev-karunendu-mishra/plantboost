@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\FShipService;
 use App\Services\NimbuspostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -96,6 +97,7 @@ class WebsiteController extends Controller
 
     public function placeShipmentOrder(Request $request)
     {
-        return NimbuspostService::createShipment((object) ['order_id' => 'PLB1001', 'name' => 'Karunendu Mishra', 'address_line_one' => 'Street No 9, Green Valley Colony (Shahapurpur), Pipalgaon Near IIIT Jhalwa', 'address_line_two' => 'Kabir Nagar', 'pin' => '211011', 'city' => 'Allahabad', 'state' => 'Uttar Pradesh', 'mobile' => '8808527577'], (object) ['name' => 'Plant Boost', 'price' => 399]);
+        return FShipService::createShipment((object) ['order_id' => 'PLB1001', 'name' => 'Karunendu Mishra', 'address_line_one' => 'Street No 9, Green Valley Colony (Shahapurpur), Pipalgaon Near IIIT Jhalwa', 'address_line_two' => 'Kabir Nagar', 'pin' => '211011', 'city' => 'Allahabad', 'state' => 'Uttar Pradesh', 'mobile' => '8808527577'], (object) ['name' => 'Plant Boost', 'price' => 399]);
+        //return NimbuspostService::createShipment((object) ['order_id' => 'PLB1001', 'name' => 'Karunendu Mishra', 'address_line_one' => 'Street No 9, Green Valley Colony (Shahapurpur), Pipalgaon Near IIIT Jhalwa', 'address_line_two' => 'Kabir Nagar', 'pin' => '211011', 'city' => 'Allahabad', 'state' => 'Uttar Pradesh', 'mobile' => '8808527577'], (object) ['name' => 'Plant Boost', 'price' => 399]);
     }
 }
