@@ -89,7 +89,7 @@
                                 <div class="title-desc d-flex flex-column my-auto">
                                     <div style="font-size: 16px;" class="p">{{$product->name}}</div>
                                 </div>
-                                <div class="price my-auto text-secondary">Rs. {{$product->price}}</div>
+                                <div class="price my-auto text-secondary">Rs. {{!empty($order->package) ? $order->package->price : $product->price}}</div>
                             </div>
                             <!-- subtotal and calculation  -->
                             <div
@@ -97,7 +97,7 @@
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <p class="m-0" style="font-size: 14px;">Subtotal</p>
                                     <p class="m-0 fw-semibold text-dark" style="font-size: 14px;">Rs.
-                                        {{$product->price}} </p>
+                                        {{!empty($order->package) ? $order->package->price : $product->price}} </p>
                                 </div>
                                 <!-- <div class="d-flex justify-content-between align-items-center">
                                     <p class="m-0" style="font-size: 14px;">Discount</p>
@@ -112,7 +112,7 @@
                             <div class="text-secondary container-fluid p-0">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <p class="m-0">Total</p>
-                                    <h4 class="m-0 fw-semibold text-dark">Rs. {{$product->price}}</h4>
+                                    <h4 class="m-0 fw-semibold text-dark">Rs. {{!empty($order->package) ? $order->package->price : $product->price}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -122,9 +122,24 @@
             </div>
         </div>
     </div>
-    @push('scripts')
+
+    @push('fb_scripts')
+    <!-- Facebook Pixel Code -->
     <script>
+        const product = @json($product);
         const order = @json($order);
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', product.pixel_id);
         fbq('track', 'Purchase', order);
     </script>
     @endpush

@@ -161,6 +161,20 @@
             </div>
         </div>
 
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div>
+                    <label for="theme_color" class="form-label">Theme Color</label>
+                    <input name="theme_color" type="text"
+                        value="{{old('theme_color', !empty($settings) ? $settings->theme_color : '')}}"
+                        class="form-control @error('theme_color') is-invalid @enderror" id="theme_color" placeholder="Theme Color">
+                        @error('theme_color')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
 
 
         <div class="row mb-3">

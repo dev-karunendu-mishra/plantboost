@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'old_price', 'offer', 'reviews', 'rating', 'product_url', 'seo_title', 'seo_keywords', 'seo_description'];
+    protected $fillable = ['name', 'description', 'price', 'old_price', 'offer', 'reviews', 'rating', 'pixel_id', 'product_url', 'seo_title', 'seo_keywords', 'seo_description'];
 
     public function images()
     {
@@ -25,5 +25,15 @@ class Product extends Model
     public function sliders()
     {
         return $this->hasMany(Slider::class);
+    }
+
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class);
+    }
+
+    public function packages()
+    {
+        return $this->hasMany(Package::class);
     }
 }

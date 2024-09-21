@@ -2,31 +2,38 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Order;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     private $indexView = 'admin.orders.all';
+
     private $storeRoute = 'admin.orders';
+
     private $editView = 'admin.orders.edit';
+
     private $deleteRoute = 'admin.orders';
+
     private $deleteMessage = 'Order deleted successfully.';
+
     private $createMessage = 'Order created successfully.';
+
     private $updateMessage = 'Order updated successfully.';
 
-    private $columns = ["order_id" => "Order ID", "name" => "Name", "client_ip" => "Customer IP", "address_line_one" => "Address 1", "address_line_two" => "Landmark", "pin" => "PIN", "city" => "City", "state" => "State", "mobile" => "Phone","source"=>"Source", "created_at" => "Created At"];
+    private $columns = ['order_id' => 'Order ID', 'name' => 'Name', 'client_ip' => 'Customer IP', 'address_line_one' => 'Address 1', 'address_line_two' => 'Landmark', 'pin' => 'PIN', 'city' => 'City', 'state' => 'State', 'mobile' => 'Phone', 'source' => 'Source', 'product_id' => 'Product', 'selected_attributes' => 'Attributes', 'package_id' => 'Package', 'created_at' => 'Created At'];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $records = Order::with(['product'])->orderBy('created_at', 'desc')->get();
+
         return view($this->indexView, ['columns' => $this->columns, 'edit' => false, 'records' => $records, 'model' => null]);
     }
 
-    
     /**
      * Store a newly created resource in storage.
      */
@@ -61,7 +68,6 @@ class OrderController extends Controller
         //return response()->json($order, 201);
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
-
 
     /**
      * Show the form for editing the specified resource.

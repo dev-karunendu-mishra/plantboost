@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Setting;
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-
     private $indexView = 'admin.settings.all';
+
     private $storeRoute = 'admin.settings';
+
     private $createView = 'admin.settings.create';
+
     private $editView = 'admin.settings.edit';
+
     private $deleteRoute = 'admin.settings';
+
     private $deleteMessage = 'Setting deleted successfully.';
+
     private $createMessage = 'Setting created successfully.';
+
     private $updateMessage = 'Setting updated successfully.';
 
     /**
@@ -24,48 +30,49 @@ class SettingController extends Controller
     public function index()
     {
         $settings = Setting::first();
-        return view($this->createView,['settings'=>$settings,'edit'=>false]);
-    }
 
+        return view($this->createView, ['settings' => $settings, 'edit' => false]);
+    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-       $validatedData = $request->validate([
-            'title'=>'required',
-            'description'=>'required',
-            'notification'=>'required',
-            'notification_2nd'=>'required',
-            'estimate_order_ready'=>'required',
-            'estimate_order_delivery'=>'required',
-            'domain'=>'required',
-            'address'=>'required',
-            'mobile'=>'required',
-            'email'=>'required',
-            'logo'=>'required|mimes:png,jpg,jpeg,gif,svg',
-            'facebook'=>'nullable',
-            'twitter'=>'nullable',
-            'instagram'=>'nullable',
-            'linkedin'=>'nullable',
-            'youtube'=>'nullable',
-            'location'=>'nullable',
-            'branches'=>'nullable',
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'notification' => 'required',
+            'notification_2nd' => 'required',
+            'estimate_order_ready' => 'required',
+            'estimate_order_delivery' => 'required',
+            'domain' => 'required',
+            'address' => 'required',
+            'mobile' => 'required',
+            'email' => 'required',
+            'logo' => 'required|mimes:png,jpg,jpeg,gif,svg',
+            'theme_color' => 'nullable',
+            'facebook' => 'nullable',
+            'twitter' => 'nullable',
+            'instagram' => 'nullable',
+            'linkedin' => 'nullable',
+            'youtube' => 'nullable',
+            'location' => 'nullable',
+            'branches' => 'nullable',
         ]);
 
         // Handle file upload
         $logo = $this->uploadFile($request, 'logo', 'uploads/logo');
         $icon = $this->uploadFile($request, 'icon', 'uploads/logo');
 
-        $validatedData['logo']=$logo;
-        $validatedData['icon']=$logo;
+        $validatedData['logo'] = $logo;
+        $validatedData['icon'] = $logo;
 
         Setting::create($validatedData);
+
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
-    
     /**
      * Show the form for editing the specified resource.
      */
@@ -87,6 +94,7 @@ class SettingController extends Controller
             'notification_2nd' => 'nullable|string',
             'estimate_order_ready' => 'nullable|string',
             'estimate_order_delivery' => 'nullable|string',
+            'theme_color' => 'nullable|string',
             'domain' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'mobile' => 'nullable|string|regex:/^[6-9]\d{9}$/',
@@ -112,6 +120,7 @@ class SettingController extends Controller
 
         // Update the record with only the provided data
         $setting->update(array_filter($validatedData));
+
         return redirect()->route($this->storeRoute)->with('success', $this->updateMessage);
     }
 
@@ -121,6 +130,7 @@ class SettingController extends Controller
     public function destroy(Setting $setting)
     {
         $setting->delete();
+
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }
 }

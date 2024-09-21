@@ -48,6 +48,25 @@
             @case('category_id')
             <td>{{!empty($record->category) ? $record->category->name : 'NA'}}</td>
             @break
+            @case('product_id')
+            <td>{{!empty($record->product) ? $record->product->name : 'NA'}}</td>
+            @break
+            @case('package_id')
+            <td>{{!empty($record->package) ? $record->package->name.' Rs : '. $record->package->price : 'NA'}}</td>
+            @break
+            @case('selected_attributes')
+            <td>
+                @if(!empty($record->selected_attributes))
+                    <ul>
+                        @foreach($record->selected_attributes as $attribute => $value)
+                            <li><strong>{{ ucfirst($attribute) }}:</strong> {{ $value }}</li>
+                        @endforeach
+                    </ul>
+                @else
+                    NA
+                @endif
+            </td>
+            @break
             @case('brand_id')
             <td>{{!empty($record->brand) ? $record->brand->name : 'NA'}}</td>
             @break

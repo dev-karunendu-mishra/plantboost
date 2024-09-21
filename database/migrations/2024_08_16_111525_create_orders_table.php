@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('pin');
             $table->string('city');
             $table->string('state');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('package_id')->nullable()->constrained()->onDelete('cascade');
+            $table->json('selected_attributes')->nullable();
             $table->string('client_ip')->nullable();
             $table->text('source')->nullable();
             $table->timestamps();

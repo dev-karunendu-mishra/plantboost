@@ -18,7 +18,7 @@ class WebsiteController extends Controller
 
         // Store it in the session
         $request->session()->put('ad_url', $fullUrl);
-        $products = Product::first();
+        $products = Product::with(['images', 'packages'])->first();
         if ($products) {
             $seo = [
                 'title' => $products->seo_title ?: $products->name,
@@ -38,7 +38,7 @@ class WebsiteController extends Controller
         $fullUrl = $request->fullUrl();
         // Store it in the session
         $request->session()->put('ad_url', $fullUrl);
-        $products = Product::where('product_url', $productURL)->with(['images'])->first();
+        $products = Product::where('product_url', $productURL)->with(['images', 'packages'])->first();
         if ($products) {
             $seo = [
                 'title' => $products->seo_title ?: $products->name,
@@ -63,6 +63,8 @@ class WebsiteController extends Controller
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'product_id' => 'required|exists:products,id', // Ensures that the Order exists
+            'package_id' => 'nullable|exists:packages,id', // Ensures that the Package exists
+            'selected_attributes' => 'nullable|array',
             'source' => 'nullable|string',
         ]);
         // Check if an order exists with the same mobile number in the last 30 days
@@ -83,7 +85,7 @@ class WebsiteController extends Controller
         // Fetch the related product details
         $product = Product::find($validatedData['product_id']);
 
-        NimbuspostService::createShipment($order, $product);
+        //NimbuspostService::createShipment($order, $product);
 
         //Flash success message
         $request->session()->flash('status', 'Your order has been placed successfully!');

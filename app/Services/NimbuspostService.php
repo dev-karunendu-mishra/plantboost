@@ -37,13 +37,14 @@ class NimbuspostService
         $token = $nimbuspostService->userLogin();
         if ($token) {
             $token = trim($token);
+            $price = ! empty($order->package) ? $order->package->price : $product->price;
             $shipmentData = [
                 'order_number' => $order->order_id,
                 // "shipping_charges" => 40,
                 // "discount" => 100,
                 // "cod_charges" => 30,
                 'payment_type' => 'cod',
-                'order_amount' => $product->price,
+                'order_amount' => $price,
                 // "package_weight" => 300,
                 // "package_length" => 10,
                 // "package_breadth" => 10,
@@ -71,7 +72,7 @@ class NimbuspostService
                     [
                         'name' => $product->name,
                         'qty' => '1',
-                        'price' => $product->price,
+                        'price' => $price,
                         //"sku" => "sku001"
                     ],
                 ],

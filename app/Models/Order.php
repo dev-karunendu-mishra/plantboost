@@ -8,11 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'mobile', 'address_line_one', 'address_line_two', 'pin', 'city', 'state', 'product_id', 'client_ip', 'source'];
-    
+
+    protected $fillable = ['name', 'mobile', 'address_line_one', 'address_line_two', 'pin', 'city', 'state', 'product_id', 'package_id', 'selected_attributes', 'client_ip', 'source'];
+
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    protected $casts = [
+        'selected_attributes' => 'array', // Automatically cast JSON to an array
+    ];
+
+    public function package()
+    {
+        return $this->belongsTo(Package::class);
     }
 
     protected static function boot()
@@ -30,7 +40,7 @@ class Order extends Model
             if ($lastOrder) {
                 // Extract the numeric part, increment it and append it to '#PLB'
                 $lastOrderId = intval(str_replace('PLB', '', $lastOrder->order_id));
-                $nextOrderId = 'PLB' . ($lastOrderId + 1);
+                $nextOrderId = 'PLB'.($lastOrderId + 1);
             }
 
             // Assign the custom order ID to the new order

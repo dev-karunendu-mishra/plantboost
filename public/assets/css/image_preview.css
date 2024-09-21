@@ -93,3 +93,39 @@
 .arrow-btn.right {
     right: -20px;
 }
+
+/* Product Attributes */
+.choose-tle {
+    margin: 0px 0;
+    color: #000;
+    font-weight: 700;
+    font-size: 16px !important;
+    text-align: center;
+}
+
+.colordv {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+.colordv .actv {
+    box-shadow: 0px 0px 10px darkgray;
+    background: #2e8b57 !important;
+    color: #ffffff !important;
+}
+
+.colordv label {
+    background: gainsboro;
+    border: none;
+    margin: 0;
+    padding: 2%;
+    width: 20%;
+    font-size: 12px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    word-spacing: 2px;
+}

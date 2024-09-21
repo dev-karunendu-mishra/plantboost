@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('estimate_order_ready')->nullable();
             $table->string('estimate_order_delivery')->nullable();
+            $table->string('theme_color')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->string('linkedin')->nullable();

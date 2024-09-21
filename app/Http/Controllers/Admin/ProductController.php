@@ -2,96 +2,110 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Product;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-
     private $indexView = 'admin.products.all';
+
     private $storeRoute = 'admin.products';
+
     private $editView = 'admin.products.edit';
+
     private $deleteRoute = 'admin.products';
+
     private $deleteMessage = 'Product deleted successfully.';
+
     private $createMessage = 'Product created successfully.';
+
     private $updateMessage = 'Product updated successfully.';
 
-    private $columns = ["id"=>"ID", "name"=>"Name", "images"=>"Image", 'product_url'=>'URL', "price"=>"Price", "created_at"=>"Created At"];
+    private $columns = ['id' => 'ID', 'name' => 'Name', 'images' => 'Image', 'product_url' => 'URL', 'price' => 'Price', 'created_at' => 'Created At'];
 
     private $fields = [
-        "name"=>[
-            "id"=>"name",
-            "name"=>"name",
-            "type"=>"text",
-            "label"=>"Product's Name",
-            "placeholder"=>"Product's Name"
+        'name' => [
+            'id' => 'name',
+            'name' => 'name',
+            'type' => 'text',
+            'label' => "Product's Name",
+            'placeholder' => "Product's Name",
         ],
-        "description"=>[
-            "id"=>"description",
-            "name"=>"description",
-            "type"=>"textarea",
-            "label"=>"Product's Description",
-            "placeholder"=>"Product's Description"
+        'description' => [
+            'id' => 'description',
+            'name' => 'description',
+            'type' => 'textarea',
+            'label' => "Product's Description",
+            'placeholder' => "Product's Description",
         ],
-        "price"=>[
-            "id"=>"price",
-            "name"=>"price",
-            "type"=>"text",
-            "label"=>"Product's Price",
-            "placeholder"=>"Product's Price"
+        'price' => [
+            'id' => 'price',
+            'name' => 'price',
+            'type' => 'text',
+            'label' => "Product's Price",
+            'placeholder' => "Product's Price",
         ],
-        "old_price"=>[
-            "id"=>"old_price",
-            "name"=>"old_price",
-            "type"=>"text",
-            "label"=>"Product's Old Price",
-            "placeholder"=>"Product's Old Price"
+        'old_price' => [
+            'id' => 'old_price',
+            'name' => 'old_price',
+            'type' => 'text',
+            'label' => "Product's Old Price",
+            'placeholder' => "Product's Old Price",
         ],
-        "offer"=>[
-            "id"=>"offer",
-            "name"=>"offer",
-            "type"=>"text",
-            "label"=>"Product's offer",
-            "placeholder"=>"Product's offer"
+        'offer' => [
+            'id' => 'offer',
+            'name' => 'offer',
+            'type' => 'text',
+            'label' => "Product's offer",
+            'placeholder' => "Product's offer",
         ],
-        "reviews"=>[
-            "id"=>"reviews",
-            "name"=>"reviews",
-            "type"=>"text",
-            "label"=>"Product's Reviews",
-            "placeholder"=>"Product's Reviews"
+        'reviews' => [
+            'id' => 'reviews',
+            'name' => 'reviews',
+            'type' => 'text',
+            'label' => "Product's Reviews",
+            'placeholder' => "Product's Reviews",
         ],
-        "rating"=>[
-            "id"=>"rating",
-            "name"=>"rating",
-            "type"=>"text",
-            "label"=>"Product's Rating",
-            "placeholder"=>"Product's Rating"
+        'rating' => [
+            'id' => 'rating',
+            'name' => 'rating',
+            'type' => 'text',
+            'label' => "Product's Rating",
+            'placeholder' => "Product's Rating",
         ],
-        "product_url"=>[
-            "id"=>"product_url",
-            "name"=>"product_url",
-            "type"=>"text",
-            "label"=>"Product's URL",
-            "placeholder"=>"Product's URL"
+        'product_url' => [
+            'id' => 'product_url',
+            'name' => 'product_url',
+            'type' => 'text',
+            'label' => "Product's URL",
+            'placeholder' => "Product's URL",
         ],
-        "image"=>[
-            "id"=>"productImage",
-            "name"=>"image[]",
-            "type"=>"file",
-            "label"=>"Product Image",
-            "placeholder"=>"Product Image"
-        ]
+        'pixel_id' => [
+            'id' => 'pixel_id',
+            'name' => 'pixel_id',
+            'type' => 'text',
+            'label' => 'Pixel ID',
+            'placeholder' => 'Pixel ID',
+        ],
+        'image' => [
+            'id' => 'productImage',
+            'name' => 'image[]',
+            'type' => 'file',
+            'label' => 'Product Image',
+            'placeholder' => 'Product Image',
+        ],
     ];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $records = Product::with(['images'])->get();
-        return view($this->indexView,['columns'=>$this->columns,'fields'=>$this->fields,'edit'=>false,'records'=>$records,'model'=>null]);
+        $records = Product::with(['images', 'attributes', 'packages'])->get();
+
+        return view($this->indexView, ['columns' => $this->columns, 'fields' => $this->fields, 'edit' => false, 'records' => $records, 'model' => null]);
     }
 
     /**
@@ -115,6 +129,7 @@ class ProductController extends Controller
             'offer' => 'required|numeric',
             'reviews' => 'required|numeric',
             'rating' => 'required|numeric',
+            'pixel_id' => 'required|string',
             'product_url' => 'required|string',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'seo_title' => 'nullable|string',
@@ -130,6 +145,7 @@ class ProductController extends Controller
             // Save each file path to the database in one go
             $product->images()->createMany($fileData);
         }
+
         return redirect()->route($this->storeRoute)->with('success', $this->createMessage);
     }
 
@@ -146,7 +162,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view($this->editView,['columns'=>$this->columns,'fields'=>$this->fields, 'model'=>$product, 'edit'=>true]);
+        return view($this->editView, ['columns' => $this->columns, 'fields' => $this->fields, 'model' => $product, 'edit' => true]);
     }
 
     /**
@@ -164,13 +180,13 @@ class ProductController extends Controller
             'reviews' => 'nullable|numeric',
             'rating' => 'nullable|numeric',
             'product_url' => 'nullable|string',
+            'pixel_id' => 'nullable|string',
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'seo_title' => 'nullable|string',
             'seo_keywords' => 'nullable|string',
             'seo_description' => 'nullable|string',
         ]);
 
-    
         // Update product fields
         $product->update($validatedData);
 
@@ -194,6 +210,7 @@ class ProductController extends Controller
     {
         $this->removeOldFiles($product, 'images', 'uploads');
         $product->delete();
+
         return redirect()->route($this->deleteRoute)->with('success', $this->deleteMessage);
     }
 
@@ -201,14 +218,15 @@ class ProductController extends Controller
     {
         // Find the image by ID
         $image = Image::findOrFail($imageId);
-        
+
         // Delete the image file from storage
         if (Storage::disk('uploads')->exists($image->path)) {
             Storage::disk('uploads')->delete($image->path);
         }
-        
+
         // Delete the image record from the database
         $image->delete();
+
         return redirect()->back()->with('success', 'Image deleted successfully.');
     }
 }

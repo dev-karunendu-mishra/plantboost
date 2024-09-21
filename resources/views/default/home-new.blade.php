@@ -166,6 +166,7 @@
     </div>
 
     @include('default.components.order-form')
+
     <button id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs">👉 Order
         Now - Cash On Delivery <br />{{!empty($products->price) ? $products->price : ''}} </button>
 
@@ -174,12 +175,33 @@
         window.onscroll = function () { buyatcbtnsticky() };
 
         function buyatcbtnsticky() {
+            console.log(document.documentElement.scrollTop > 750);
             if (document.documentElement.scrollTop > 750) {
                 document.getElementById("footer_sticky_btn").style.display = "block";
             } else {
-                document.getElementById("footer_sticky_btn").style.display = "";
+                document.getElementById("footer_sticky_btn").style.display = "none";
             }
         }
+    </script>
+    @endpush
+
+    @push('fb_scripts')
+    <!-- Facebook Pixel Code -->
+    <script>
+        const productInfo = @json($products);
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', productInfo.pixel_id);
+        //fbq('track', 'PageView');
     </script>
     @endpush
 </x-default-app-layout>
