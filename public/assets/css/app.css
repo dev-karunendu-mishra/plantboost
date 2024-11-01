@@ -479,6 +479,7 @@ footer a:hover {
 .package {
     border-radius: 10px !important;
     cursor: pointer !important;
+     height: 100%;
 }
 .package .card-footer {
     border-radius: 0 0 10px 10px !important;

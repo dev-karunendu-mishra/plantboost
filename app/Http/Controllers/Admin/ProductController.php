@@ -96,6 +96,13 @@ class ProductController extends Controller
             'label' => 'Product Image',
             'placeholder' => 'Product Image',
         ],
+        'courier_partner_title' => [
+            'id' => 'courier_partner_title',
+            'name' => 'courier_partner_title',
+            'type' => 'text',
+            'label' => 'Title for Courier',
+            'placeholder' => 'Title for Courier',
+        ],
     ];
 
     /**
@@ -132,6 +139,7 @@ class ProductController extends Controller
             'pixel_id' => 'required|string',
             'product_url' => 'required|string',
             'image.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'courier_partner_title' => 'nullable|string',
             'seo_title' => 'nullable|string',
             'seo_keywords' => 'nullable|string',
             'seo_description' => 'nullable|string',
@@ -182,6 +190,7 @@ class ProductController extends Controller
             'product_url' => 'nullable|string',
             'pixel_id' => 'nullable|string',
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'courier_partner_title' => 'nullable|string',
             'seo_title' => 'nullable|string',
             'seo_keywords' => 'nullable|string',
             'seo_description' => 'nullable|string',

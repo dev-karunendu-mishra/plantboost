@@ -16,6 +16,7 @@ return new class extends Migration
             // $table->foreignId('category_id')->constrained()->onDelete('cascade');
             // $table->foreignId('brand_id')->constrained()->onDelete('cascade');
             $table->string('name');
+            $table->string('courier_partner_title')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('old_price', 10, 2)->nullable();

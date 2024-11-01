@@ -1,7 +1,7 @@
 
 
 <center>
-<h5> SOME REVIEWS FROM OUR HAPPY CUSTOMERS</h5>
+<h5 style="background-color:#60bb2a;{{!empty($siteData->theme_color) ? 'background-color:'. $siteData->theme_color : ''}}" class="my-2"> SOME REVIEWS FROM OUR HAPPY CUSTOMERS</h5>
 </center>
 @if(count($testimonials) > 0)
 <div id="carouselReviewControlsTestimonials" class="carousel slide mt-3" data-bs-ride="carousel">

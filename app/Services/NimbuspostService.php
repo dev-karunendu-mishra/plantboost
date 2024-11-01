@@ -70,7 +70,7 @@ class NimbuspostService
                 ],
                 'order_items' => [
                     [
-                        'name' => $product->name,
+                        'name' => ! empty($product->courier_partner_title) ? $product->courier_partner_title : $product->name,
                         'qty' => '1',
                         'price' => $price,
                         //"sku" => "sku001"

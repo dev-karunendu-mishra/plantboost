@@ -55,18 +55,50 @@ class WebsiteController extends Controller
     public function placeOrder(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|min:3|max:255', // Minimum 3 characters
-            'mobile' => ['required', 'regex:/^[6-9]\d{9}$/'], // Validation for mobile field
-            'address_line_one' => 'required|string|min:4|max:255', // Minimum 4 characters
-            'address_line_two' => 'nullable|string|min:5|max:255', // Minimum 5 characters if provided
-            'pin' => 'required|string|size:6', // Assuming pin code is 6 digits
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
-            'product_id' => 'required|exists:products,id', // Ensures that the Order exists
-            'package_id' => 'nullable|exists:packages,id', // Ensures that the Package exists
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                'regex:/^[\p{L}\s.]+$/u', // Allows letters, spaces, and periods only
+            ],
+            'mobile' => [
+                'required',
+                'regex:/^[6-9]\d{9}$/',
+            ],
+            'address_line_one' => [
+                'required',
+                'string',
+                'min:4',
+                'max:255',
+                'regex:/^[\p{L}\d\s,.-]+$/u', // Allows letters, numbers, spaces, and some punctuation
+            ],
+            'address_line_two' => [
+                'nullable',
+                'string',
+                'min:5',
+                'max:255',
+                'regex:/^[\p{L}\d\s,.-]*$/u', // Allows letters, numbers, spaces, and some punctuation
+            ],
+            'pin' => 'required|string|size:6|regex:/^\d{6}$/', // Assuming pin code is 6 digits
+            'city' => [
+                'required',
+                'string',
+                'max:100',
+                'regex:/^[\p{L}\s.-]+$/u', // Allows letters, spaces, and some punctuation
+            ],
+            'state' => [
+                'required',
+                'string',
+                'max:100',
+                'regex:/^[\p{L}\s.-]+$/u', // Allows letters, spaces, and some punctuation
+            ],
+            'product_id' => 'required|exists:products,id',
+            'package_id' => 'nullable|exists:packages,id',
             'selected_attributes' => 'nullable|array',
             'source' => 'nullable|string',
         ]);
+
         // Check if an order exists with the same mobile number in the last 30 days
         $existingOrder = Order::where('mobile', $validatedData['mobile'])
             ->where('created_at', '>=', now()->subDays(7))

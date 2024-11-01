@@ -18,12 +18,15 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         referrerpolicy="no-referrer" />
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
 
     <link href="assets/css/app.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/order-form.css" rel="stylesheet">
 
 
 
@@ -68,7 +71,7 @@
     @if (Route::is('index') || Route::is('product'))
     {{-- Your component goes here --}}
     <marquee class="h5 fw-bold text-white position-relative mb-0 py-2" behavior="scrolling" direction="left"
-        style="max-width: 500px;left: 50%;transform: translateX(-50%);background-color: #60bb2a;">
+        style="max-width: 500px;left: 50%;transform: translateX(-50%);background-color: #60bb2a; {{!empty($siteData->theme_color) ? 'background-color:'. $siteData->theme_color : ''}}">
         {{!empty($siteData) ? $siteData->notification : 'WELCOME! The Best Shop
         for your Plants!!! Delivering Happiness, Health and Growth for your PLANTS All Over INDIA!!!'}}</marquee>
     @endif
@@ -82,7 +85,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

@@ -173,6 +173,17 @@
                     @enderror
                 </div>
             </div>
+            <div class="col-md-6">
+                <div>
+                    <label for="cod_button_bg" class="form-label">COD Button Color</label>
+                    <input name="cod_button_bg" type="text"
+                        value="{{old('cod_button_bg', !empty($settings) ? $settings->cod_button_bg : '')}}"
+                        class="form-control @error('cod_button_bg') is-invalid @enderror" id="cod_button_bg" placeholder="COD Button Color">
+                        @error('cod_button_bg')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
         </div>
 
 

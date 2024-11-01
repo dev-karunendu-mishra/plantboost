@@ -48,10 +48,17 @@
 
         <!-- Order Now Button -->
         <div class="d-grid gap-2 pt-3">
+            @if(count($products->attributes) > 0)
             <button class="btn btn-success fw-bold rounded-pill shake-btn" type="button" data-bs-toggle="modal"
-                data-bs-target="#contactUs">
+                data-bs-target="#contactUs" style="{{!empty($siteData->cod_button_bg) ? 'background-color:'. $siteData->cod_button_bg.';border-color:'.$siteData->cod_button_bg : ''}}">
                 <span>Order Now - Cash on Delivery - {{!empty($products->price) ? $products->price : ''}}</span>
             </button>
+            @else
+            <button disabled class="btn btn-success fw-bold rounded-pill shake-btn" type="button" data-bs-toggle="modal"
+                data-bs-target="#contactUs" style="{{!empty($siteData->cod_button_bg) ? 'background-color:'. $siteData->cod_button_bg.';border-color:'.$siteData->cod_button_bg : ''}}">
+                <span>Order Now - Cash on Delivery - {{!empty($products->price) ? $products->price : ''}}</span>
+            </button>
+            @endif
         </div>
 
         <!-- Order Track -->
@@ -166,9 +173,13 @@
     </div>
 
     @include('default.components.order-form')
-
-    <button id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs">👉 Order
+    @if(count($products->attributes) > 0)
+    <button id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs" style="{{!empty($siteData->cod_button_bg) ? 'background-color:'. $siteData->cod_button_bg.';border-color:'.$siteData->cod_button_bg : ''}}">👉 Order
         Now - Cash On Delivery <br />{{!empty($products->price) ? $products->price : ''}} </button>
+    @else
+    <button disabled id="footer_sticky_btn" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#contactUs" style="{{!empty($siteData->cod_button_bg) ? 'background-color:'. $siteData->cod_button_bg.';border-color:'.$siteData->cod_button_bg : ''}}">👉 Order
+        Now - Cash On Delivery <br />{{!empty($products->price) ? $products->price : ''}} </button>
+    @endif
 
     @push('scripts')
     <script>

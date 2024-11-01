@@ -34,13 +34,13 @@ class Order extends Model
             $lastOrder = Order::orderBy('id', 'desc')->first();
 
             // Set the initial order ID
-            $nextOrderId = 'PLB1001'; // Default order ID if no records exist
+            $nextOrderId = '#PLB1001'; // Default order ID if no records exist
 
             // If there is a last order, increment the numeric part of the order_id
             if ($lastOrder) {
                 // Extract the numeric part, increment it and append it to '#PLB'
-                $lastOrderId = intval(str_replace('PLB', '', $lastOrder->order_id));
-                $nextOrderId = 'PLB'.($lastOrderId + 1);
+                $lastOrderId = intval(str_replace('#PLB', '', $lastOrder->order_id));
+                $nextOrderId = '#PLB'.($lastOrderId + 1);
             }
 
             // Assign the custom order ID to the new order

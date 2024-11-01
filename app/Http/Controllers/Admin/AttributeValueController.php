@@ -69,7 +69,12 @@ class AttributeValueController extends Controller
      */
     public function update(Request $request, AttributeValue $attributeValue)
     {
-        //
+        $validatedData = $request->validate([
+            'value' => 'required|max:255',
+        ]);
+        $attributeValue->update($validatedData);
+
+        return back()->with('success', 'Attribute updated successfully.');
     }
 
     /**

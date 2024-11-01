@@ -1,9 +1,15 @@
 <!-- Modal -->
+<style>
+    .colordv .actv {
+        background: {{!empty($siteData->theme_color) ? $siteData->theme_color : ''}}!important;
+    }
+</style>
 <div class="modal slide-modal" id="contactUs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="contactUs" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header border-0 align-items-center bg-success text-light">
+            <div class="modal-header border-0 align-items-center text-light"
+                style="{{!empty($siteData->theme_color) ? 'background-color:'. $siteData->theme_color : 'background-color:#198754;'}}">
                 <div class="w-100">
                     <div class="text-center">
                         🛍️LIMITED TIME OFFER VALID FOR TODAY ONLY 😯 ⬇️
@@ -12,7 +18,7 @@
                 </div>
                 <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body p-2">
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -66,23 +72,26 @@
                     @endforeach--}}
 
                     @if(!empty($products->packages))
-                    <div class="row row-cols-1 row-cols-md-2 g-4 packages-row">
+                    <div class="row g-1">
                         @foreach($products->packages as $package)
-                        <div class="col">
+                        <div class="col-4">
                             <div class="card package {{$loop->first?'active-pack':''}} text-center"
+                                style="{{!empty($siteData->theme_color) ? 'border-color:'.$siteData->theme_color : 'border-color:#198754;'}}"
                                 onclick="get_price_value(this, {{$package->id}}, {{$package->price}}, {{$package->old_price}}, {{$package->offer}})">
                                 <div class="card-header border-0 bg-transparent">
                                     <strong>{{$package->name}}</strong>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text m-0"><strong class="badge bg-success">Save
+                                    <p class="card-text m-0"><strong class="badge"
+                                            style="{{!empty($siteData->theme_color) ? 'background-color:'.$siteData->theme_color : 'background-color:#198754;'}}">Save
                                             Rs.{{$package->old_price - $package->price}}</strong></p>
                                     <p class="card-text m-0"><strong>Rs.{{$package->price}}</strong></p>
                                     <p class="card-text m-0"><del><small>Rs.{{$package->old_price}}</small></del></p>
                                 </div>
                                 @if(!empty($package->seller_message))
-                                <div class="card-footer border-0 bg-success text-white text-uppercase">
-                                    {{$package->seller_message}}
+                                <div class="card-footer border-0 text-white text-uppercase"
+                                    style="{{!empty($siteData->theme_color) ? 'background-color:'. $siteData->theme_color.';border-color:'.$siteData->theme_color : 'background-color:#198754;'}}">
+                                    <small>{{$package->seller_message}}</small>
                                 </div>
                                 @endif
                             </div>
@@ -141,12 +150,17 @@
                     </div>
 
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="pin" style="width: 40px;"><i
-                                class="fa fa-hashtag"></i></span>
-                        <input id="pincode" name="pin" type="text" class="form-control" placeholder="Pincode"
-                            aria-label="Pincode" aria-describedby="pin" oninput="validateNumber(this)" pattern="\d{1,6}"
-                            title="Please enter up to 6 digits" maxlength="6" required />
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text" id="pin" style="width: 40px;"><i
+                                    class="fa fa-hashtag"></i></span>
+                            <input id="pincode" name="pin" type="text" class="form-control" placeholder="Pincode"
+                                aria-label="Pincode" aria-describedby="pin" oninput="validateNumber(this)"
+                                pattern="\d{1,6}" title="Please enter up to 6 digits" maxlength="6" required />
+                        </div>
+                        <div id="pinError" class="text-danger d-none">
+                            <small>Pin Code not available.</small>
+                        </div>
                     </div>
 
                     <div class="input-group mb-3">
@@ -166,9 +180,19 @@
                     <input id='selected_state' type="hidden" name="state" value="">
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success">Buy Now (Free COD)- Rs
+                        @if(count($products->attributes) > 0)
+                        <button id="order_btn" type="submit" class="btn text-light"
+                            style="{{!empty($siteData->theme_color) ? 'background-color:'. $siteData->theme_color : 'background-color:#198754;'}}">Buy
+                            Now (Free COD)- Rs
                             <span id="place_order_btn">{{!empty($products->price) ? $products->price : ''}}</span>
                         </button>
+                        @else
+                        <button id="order_btn" type="submit" class="btn text-light"
+                            style="{{!empty($siteData->theme_color) ? 'background-color:'. $siteData->theme_color : 'background-color:#198754;'}}"
+                            disabled>Buy Now (Free COD)- Rs
+                            <span id="place_order_btn">{{!empty($products->price) ? $products->price : ''}}</span>
+                        </button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -224,9 +248,15 @@
                     break; // Stop the loop once we find a match
                 }
             }
+            document.getElementById('order_btn').disabled = false;
+            document.getElementById('pinError').classList.add('d-none');
+            document.getElementById('pinError').classList.remove('d-block');
         } else {
             selectBox.selectedIndex = 0;
             selectBox.disabled = false;
+            document.getElementById('order_btn').disabled = true;
+            document.getElementById('pinError').classList.add('d-block');
+            document.getElementById('pinError').classList.remove('d-none');
         }
 
     });

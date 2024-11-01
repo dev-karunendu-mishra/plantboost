@@ -55,17 +55,42 @@
                             <ul class="list-group list-group-flush">
                                 @foreach($model->attributes as $attribute)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{$attribute->name}}
+                                    <div id="attribute-{{$attribute->id}}-info"
+                                        class="d-flex justify-content-between align-items-center w-100">
+                                        <div class="flex-grow-1">{{$attribute->name}}</div>
+                                        <form action='{{route("admin.attributes.destroy", $attribute->id)}}'
+                                            method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-warning btn-sm" type="button"
+                                                    onclick="editAttribute(this, 'attribute-{{$attribute->id}}-info')"><span
+                                                        class="ti ti-edit fs-4"></span></button>
+                                                <button class="btn btn-danger btn-sm" type="submit"><span
+                                                        class="ti ti-trash fs-4"></span></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="attribute-{{$attribute->id}}-info-edit" class="d-none w-100">
+                                        <form class="d-flex align-items-center w-100"
+                                            action="{{route('admin.attributes.update', $attribute->id)}}" method="post">
+                                            @method('put')
+                                            @csrf
+                                            <div class="flex-grow-1 me-2">
+                                                <label class="visually-hidden" for="attribute_name">Attribute
+                                                    Name</label>
+                                                <input name="name" type="text" class="form-control" required
+                                                    id="attribute_name" placeholder="Attribute Name"
+                                                    value="{{$attribute->name}}" />
+                                            </div>
 
-                                    <form action='{{route("admin.attributes.destroy", $attribute->id)}}' method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-danger btn-sm" type="submit"><span
-                                                    class="ti ti-trash fs-4"></span></button>
-                                        </div>
-                                    </form>
+                                            <div class="">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="reset" class="btn btn-danger"
+                                                    onclick="discardEditing(this, 'attribute-{{$attribute->id}}-info')">Discard</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </li>
                                 @endforeach
                             </ul>
@@ -99,18 +124,43 @@
                             <ul class="list-group list-group-flush">
                                 @foreach($attribute->values as $value)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{$value->value}}
-                                    <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
+                                    <div id="attribute-value-{{$value->id}}-info"
+                                        class="d-flex justify-content-between align-items-center w-100">
+                                        <div class="flex-grow-1">{{$value->value}}</div>
+                                        <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
+                                        <form action='{{route("admin.attribute-values.destroy", $value->id)}}'
+                                            method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-warning btn-sm" type="button"
+                                                    onclick="editAttribute(this, 'attribute-value-{{$value->id}}-info')"><span
+                                                        class="ti ti-edit fs-4"></span></button>
+                                                <button class="btn btn-danger btn-sm" type="submit"><span
+                                                        class="ti ti-trash fs-4"></span></button>
+                                            </div>
+                                        </form>
+                                    </div>
 
-                                    <form action='{{route("admin.attribute-values.destroy", $value->id)}}' method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-danger btn-sm" type="submit"><span
-                                                    class="ti ti-trash fs-4"></span></button>
-                                        </div>
-                                    </form>
+                                    <div id="attribute-value-{{$value->id}}-info-edit" class="d-none w-100">
+                                        <form class="d-flex align-items-center w-100"
+                                            action="{{route('admin.attribute-values.update', $value->id)}}"
+                                            method="post">
+                                            @method('put')
+                                            @csrf
+                                            <div class="flex-grow-1 me-2">
+                                                <label class="visually-hidden" for="value"></label>
+                                                <input name="value" type="text" class="form-control" required id="value"
+                                                    value="{{$value->value}}" />
+                                            </div>
+
+                                            <div class="">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="reset" class="btn btn-danger"
+                                                    onclick="discardEditing(this, 'attribute-value-{{$value->id}}-info')">Discard</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </li>
                                 @endforeach
                             </ul>
@@ -133,96 +183,6 @@
 
                     </div>
                     @endforeach
-                    {{--
-                    <!-- Color -->
-                    <div class="col-md-6">
-                        <!-- Colors -->
-                        <div class="card">
-                            <div class="card-header">
-                                Available Colors
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                @foreach($model->colors as $color)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{$color->name}}
-                                    <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
-
-                                    <form action='{{route("admin.colors.destroy", $color->id)}}' method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-danger btn-sm" type="submit"><span
-                                                    class="ti ti-trash fs-4"></span></button>
-                                        </div>
-                                    </form>
-                                </li>
-                                @endforeach
-                            </ul>
-                            <div class="card-footer">
-                                <form class="row gy-2 gx-3 align-items-center" action="{{route('admin.colors.store')}}"
-                                    method="post">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{$model->id}}" />
-                                    <div class="col-auto">
-                                        <label class="visually-hidden" for="color_name">Color Name</label>
-                                        <input name="name" type="text" class="form-control" required id="color_name"
-                                            placeholder="Color Name" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <button type="submit" class="btn btn-primary">Add Color</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Size -->
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                Available Sizes
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                @foreach($model->sizes as $size)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{$size->name}}
-                                    <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
-
-                                    <form action='{{route("admin.sizes.destroy", $size->id)}}' method="POST"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-danger btn-sm" type="submit"><span
-                                                    class="ti ti-trash fs-4"></span></button>
-                                        </div>
-                                    </form>
-                                </li>
-                                @endforeach
-                            </ul>
-                            <div class="card-footer">
-                                <form class="row gy-2 gx-3 align-items-center" action="{{route('admin.sizes.store')}}"
-                                    method="post">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{$model->id}}" />
-                                    <div class="col-auto">
-                                        <label class="visually-hidden" for="size_name">Size Name</label>
-                                        <input name="name" type="text" class="form-control" required id="size_name"
-                                            placeholder="Size Name" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <button type="submit" class="btn btn-primary">Add Size</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    --}}
 
                     <!-- Package -->
                     <div class="col-md-12">
@@ -255,6 +215,15 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="btn-group" role="group">
+                                                        <button class="btn btn-danger btn-sm" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#editPackage"
+                                                            data-bs-package="{{$package->id}}"
+                                                            data-bs-packageName="{{$package->name}}"
+                                                            data-bs-price="{{$package->price}}"
+                                                            data-bs-oldPrice="{{$package->old_price}}"
+                                                            data-bs-offer="{{$package->offer}}"
+                                                            data-bs-sellerMessage="{{$package->seller_message}}"><span
+                                                                class="ti ti-edit fs-4"></span></button>
                                                         <button class="btn btn-danger btn-sm" type="submit"><span
                                                                 class="ti ti-trash fs-4"></span></button>
                                                     </div>
@@ -306,11 +275,98 @@
                 </div>
 
             </div>
-
-
         </div>
     </div>
 
+    <div class="modal" id="editPackage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="editPackage" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 align-items-center bg-success text-light">
+                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row gy-2 gx-3 align-items-center" action="{{route('admin.packages.update', '')}}"
+                        method="post">
+                        @method('put')
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{$model->id}}" />
+                        <div class="col-12">
+                            <label class="visually-hidden" for="package_name">Package Name</label>
+                            <input name="name" type="text" class="form-control" required id="package_name"
+                                placeholder="Package Name" />
+                        </div>
+                        <div class="col-12">
+                            <label class="visually-hidden" for="pprice">Price</label>
+                            <input name="price" type="text" class="form-control" required id="pprice"
+                                placeholder="Price" />
+                        </div>
+                        <div class="col-12">
+                            <label class="visually-hidden" for="opprice">Old Price</label>
+                            <input name="old_price" type="text" class="form-control" required id="opprice"
+                                placeholder="Old Price" />
+                        </div>
+                        <div class="col-12">
+                            <label class="visually-hidden" for="offer">Offer</label>
+                            <input name="offer" type="text" class="form-control" required id="offer"
+                                placeholder="Offer" />
+                        </div>
+                        <div class="col-12">
+                            <label class="visually-hidden" for="seller_msg">Seller Message</label>
+                            <input name="seller_message" type="text" class="form-control" id="seller_msg"
+                                placeholder="Message" />
+                        </div>
 
+                        <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Update Package</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        function editAttribute(element, selector) {
+            document.getElementById(`${selector}`).classList.add('d-none');
+            document.getElementById(`${selector}-edit`).classList.remove('d-none');
+        }
+
+        function discardEditing(element, selector) {
+            document.getElementById(`${selector}`).classList.remove('d-none');
+            document.getElementById(`${selector}-edit`).classList.add('d-none');
+        }
+
+        const editPackageModal = document.getElementById('editPackage')
+        if (editPackageModal) {
+            editPackageModal.addEventListener('show.bs.modal', event => {
+                // Button that triggered the modal
+                const button = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                const pName = button.getAttribute('data-bs-packageName')
+                // If necessary, you could initiate an Ajax request here
+                // and then do the updating in a callback.
+
+                // Update the modal's content.
+                const pInput = editPackageModal.querySelector('.modal-body form')
+                const pNameInput = editPackageModal.querySelector('.modal-body #package_name');
+                const pPriceInput = editPackageModal.querySelector('.modal-body #pprice')
+                const pOldPriceInput = editPackageModal.querySelector('.modal-body #opprice')
+                const pOfferInput = editPackageModal.querySelector('.modal-body #offer')
+                const pSMsgInput = editPackageModal.querySelector('.modal-body #seller_msg')
+
+
+                pNameInput.value = pName;
+                pPriceInput.value = button.getAttribute('data-bs-price');
+                pOldPriceInput.value = button.getAttribute('data-bs-oldPrice');
+                pOfferInput.value = button.getAttribute('data-bs-offer');
+                pSMsgInput.value = button.getAttribute('data-bs-sellerMessage');
+                pInput.action = `${pInput.action}/${button.getAttribute('data-bs-package')}`;
+            })
+        }
+    </script>
+    @endpush
 
 </x-admin-app-layout>

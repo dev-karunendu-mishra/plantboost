@@ -71,7 +71,7 @@
             <td>{{!empty($record->brand) ? $record->brand->name : 'NA'}}</td>
             @break
             @case('created_at')
-            <td>{{!empty($record->created_at) ? \Carbon\Carbon::parse($record->$key)->timezone('Asia/Kolkata')->format('d-m-Y H:i:s') : 'NA'}}</td>
+            <td>{{!empty($record->created_at) ? \Carbon\Carbon::parse($record->$key)->timezone('Asia/Kolkata')->format('d-m-Y') : 'NA'}}</td>
             @break
             @default
              <td>{{$record->$key}}</td>
